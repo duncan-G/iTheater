@@ -11,7 +11,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./client/dist/www:/usr/share/nginx/html
-    command: nginx -g 'daemon off
+    command: nginx -g 'daemon off'
   server:
     build:
       context: ./server

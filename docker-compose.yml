@@ -16,3 +16,5 @@ services:
     build:
       context: ./server
       dockerfile: ./Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:5000

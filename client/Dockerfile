@@ -12,4 +12,4 @@ RUN npm set progress=false && npm install --production
 COPY . .
 
 # Build
-RUN npm run build --prod
+RUN npm run build-prod

@@ -15,5 +15,5 @@ FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /server
 COPY --from=build-env /server/out .
 RUN ls
-ENTRYPOINT ["dotnet", "AspnetApp.dll"]
+ENTRYPOINT ["dotnet", "server.dll"]
 

@@ -2,6 +2,8 @@ version: '3.7'
 
 services:
   client:
+    build:
+      context: ./client/dist
     volumes:
       - static-web:./client/dist/www
   nginx:

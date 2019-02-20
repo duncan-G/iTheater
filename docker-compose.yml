@@ -5,19 +5,19 @@ services:
     build:
       context: ./client
       dockerfile: ./client/Dockerfile
-    volume:
+    volumes:
       - static-web:./client/dist
   nginx:
-    build:
-      context: ./nginx
-      dockerfile: ./nginx/Dockerfile
+    image: nginx:stable-alpine
     restart: always
     environment:
       - NGINX_HOST=${NGINX_HOST}
     ports:
       - 80:80
-    volume:
+    volumes:
+      - ./nginx/template.conf:/tmp/template.conf
       - static-web:/usr/share/nginx/html
+    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /tmp/template.conf > /etc/nginx/nginx.conf && nginx -g 'daemon off;'
   server:
     build:
       context: ./server

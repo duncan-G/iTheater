@@ -15,9 +15,9 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./nginx/template.conf:/tmp/template.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - static-web:/usr/share/nginx/html
-    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /tmp/template.conf > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    command: nginx -g 'daemon off;'"
   server:
     build:
       context: ./server

@@ -2,11 +2,8 @@ version: '3.7'
 
 services:
   client:
-    build:
-      context: ./client
-      dockerfile: ./Dockerfile
     volumes:
-      - static-web:./client/dist
+      - static-web:./client/dist/www
   nginx:
     image: nginx:stable-alpine
     restart: always

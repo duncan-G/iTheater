@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: ./client/Dockerfile
+    volume:
+      - static-web:./client/dist
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: ./nginx/Dockerfile
+    restart: always
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+    ports:
+      - 80:80
+    volume:
+      - static-web:/usr/share/nginx/html
+  server:
+    build:
+      context: ./server
+      dockerfile: ./server/Dockerfile
+volumes:
+  static-web:

@@ -9,7 +9,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./client/dist/www:/usr/share/nginx/html
     command: nginx -g 'daemon off';
   server:

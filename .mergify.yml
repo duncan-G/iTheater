@@ -1,7 +1,7 @@
 pull_request_rules:
   - name: Automatic merge on CI success
     conditions:
-      - status-success=Travis CI - Pull Request
+      - status-success=Travis CI - Branch
     actions:
       merge:
         method: merge

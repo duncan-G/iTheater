@@ -1,13 +1,18 @@
+
 matrix:
   include:
     - language: node_js
       node_js:
-        - node:10.5.1
+        - node # get latest node version available in travis
       cache: npm # cache installed npm packages for faster build times.
+      dist: trusty # uses trusty environment
+      sudo: false # when on trusty, uses Docker containers for speed
+      before_install:
+        cd client
       install:
         - npm ci # faster, goes only from package-lock
-      before_script:
-        - cd client
+      # before_script:
+      #   - cd client
       script:
         - npm run lint
         - npm run test-headless

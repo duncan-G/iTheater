@@ -1,12 +1,12 @@
 
 matrix:
   include:
-    - language: node_js
-      node_js:
-        - node # get latest node version available in travis
-      cache: npm # cache installed npm packages for faster build times.
-      dist: trusty # uses trusty environment
-      sudo: false # when on trusty, uses Docker containers for speed
+    # - language: node_js
+      # node_js:
+      #   - node # get latest node version available in travis
+      # cache: npm # cache installed npm packages for faster build times.
+      # dist: trusty # uses trusty environment
+      # sudo: false # when on trusty, uses Docker containers for speed
       # before_install:
       #   cd client
       # install:

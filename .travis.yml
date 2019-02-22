@@ -1,0 +1,24 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - node:10.5.1
+      cache: npm # cache installed npm packages for faster build times.
+      install:
+        - npm ci # faster, goes only from package-lock
+      before_script:
+        - cd client
+      script:
+        - npm run lint
+        - npm run test-headless
+    # - language: csharp
+    #   dotnet: 2.2.103
+    #   install:
+    #     - dotnet restore
+    #   before_script:
+    #     - cd server
+    #   script:
+    #     - dotnet build
+    #     - dotnet test MTAServiceStatus.Tests/MTAServiceStatus.Tests.csproj
+
+    

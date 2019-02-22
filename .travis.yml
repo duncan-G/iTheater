@@ -2,7 +2,7 @@ matrix:
   include:
     - language: node_js
       node_js:
-        - node:10.5.1
+        - node:10.15.1
       cache: npm # cache installed npm packages for faster build times.
       install:
         - npm ci # faster, goes only from package-lock

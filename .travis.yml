@@ -1,18 +1,18 @@
 
 matrix:
   include:
-    # - language: node_js
-      # node_js:
-      #   - node # get latest node version available in travis
-      # cache: npm # cache installed npm packages for faster build times.
-      # dist: trusty # uses trusty environment
-      # sudo: false # when on trusty, uses Docker containers for speed
-      # before_install:
-      #   cd client
-      # install:
-      #   - npm ci # faster, goes only from package-lock
-      # before_script:
-      #   - cd client
+    - language: node_js
+      node_js:
+        - node # get latest node version available in travis
+      cache: npm # cache installed npm packages for faster build times.
+      dist: trusty # uses trusty environment
+      sudo: false # when on trusty, uses Docker containers for speed
+      before_install:
+        cd client
+      install:
+        - npm ci # faster, goes only from package-lock
+      before_script:
+        - cd client
       script:
          - echo "i ran"
         # - npm run lint
@@ -21,6 +21,7 @@ matrix:
         email:
           on_success: change # default: change (only when going from broken to fixed)
           on_failure: always # default: always (which is annoying, as it should be)
+          
     # - language: csharp
     #   dotnet: 2.2.103
     #   install:

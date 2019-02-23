@@ -5,5 +5,4 @@ pull_request_rules:
     actions:
       merge:
         method: merge
-        strict: true
       delete_head_branch:

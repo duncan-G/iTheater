@@ -1,0 +1,44 @@
+<div id="landing" fxFlex fxLayout="column" flaxLayoutAlign="center center">
+  <ng-container *ngFor="let movie of popularMovies">
+    <div class="popular-movie-container">
+      <div
+        class="backdrop"
+        [style.backgroundImage]="
+          'url(' + imageBaseUrl + movie.backdrop_path + ')'
+        "
+      ></div>
+      <div
+        class="popular-movie"
+        fxFlex
+        fxLayout="column"
+        fxLayoutAlign="center center"
+      >
+        <div class="movie-content">
+          <h1 class="movie-title">
+            {{ movie.title }}
+          </h1>
+          <p class="movie-overview">
+            {{ movie.overview }}
+          </p>
+          <div class="movie-ratings">
+            <div class="rating">
+              <h2>{{ movie.vote_average }}</h2>
+              <span class="rating-name">Average Rating</span>
+            </div>
+            <div class="rating">
+              <h2>{{ movie.vote_count }}</h2>
+              <span class="rating-name">Number Of Votes</span>
+            </div>
+            <div class="add-icon">
+              <button mat-fab class="add-btn">
+                <mat-icon
+                  >add</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

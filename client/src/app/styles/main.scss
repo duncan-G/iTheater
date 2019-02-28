@@ -1,0 +1,15 @@
+// Perfect scrollbar
+@import '~perfect-scrollbar/css/perfect-scrollbar';
+
+
+// Include core Angular Material styles
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Partials
+@import "partials/angular-material-fix";
+@import "partials/forms";
+@import "partials/normalize";
+@import "partials/scrollbars";
+@import "partials/base";
+@import "partials/perfect-scrollbar";

@@ -14,7 +14,7 @@ services:
     command: nginx -g 'daemon off';
   server:
     build:
-      context: ./server
+      context: ./Server
       dockerfile: ./Dockerfile
     environment:
       - ASPNETCORE_URLS=http://+:5000

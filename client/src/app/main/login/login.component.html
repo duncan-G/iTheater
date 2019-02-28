@@ -1,0 +1,45 @@
+<div id="login">
+  <div id="login-background"></div>
+  <div id="login-content">
+    <div id="login-form">
+      <div class="title">LOGIN TO YOUR ACCOUNT</div>
+
+      <form name="loginForm" [formGroup]="loginForm" novalidate>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-icon matSuffix>mail</mat-icon>
+          <mat-error *ngIf="loginForm.get('email').hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error
+            *ngIf="
+              !loginForm.get('email').hasError('required') &&
+              loginForm.get('email').hasError('email')
+            "
+          >
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-icon matSuffix>vpn_key</mat-icon>
+          <mat-error>
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="submit-button"
+          aria-label="LOG IN"
+        >
+          LOGIN
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<mat-toolbar fxFlex fxLayout="column" fxLayoutAlign="start">
+  <div fxFlex fxLayout="row" id="navbar-wrapper" fxLayoutAlign="start center">
+    <div id="logo-wrapper">
+      <img id="app-logo" src="/assets/iTheaterLogo-01.svg" alt="iTheater"/>
+    </div>
+    <div id="nav-items" fxFlex="1 1" fxLayout="row">
+      <div class="nav-item" [routerLink]="'/'">
+        Explore
+      </div>
+      <div class="nav-item" [routerLink]="'/my-theater'">
+        MyTheater
+      </div>
+    </div>
+    <div id="toolbar-items" fxFlex fxLayout="row">
+      <div class="toolbar-item" [routerLink]="'/register'">
+       SIGN UP
+      </div>
+      <div class="toolbar-item" [routerLink]="'/login'">
+        LOGIN
+      </div>
+    </div>
+  </div>
+  <mat-divider id="toolbar-divider"></mat-divider>
+</mat-toolbar>

@@ -13,7 +13,12 @@ export const movieLists = [
   "Romance"
 ];
 
-export const moveListsWithMovies = movieLists.map(movie => ({
-  name: movie,
-  recentlyAdded: movies
+export const movieListWithImage = movieLists.map((name, i) => ({
+  name,
+  poster_path: movies[i].poster_path
 }));
+
+export const movieListsWithMovies = movieLists.reduce((acum, name) => {
+  acum[name] = movies;
+  return acum;
+}, {});

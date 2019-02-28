@@ -8,7 +8,8 @@ namespace Server.Helpers {
         public AutoMappers () {
             CreateMap<User, UserDto> ();
             CreateMap<UserDto, User> ();
+            CreateMap<CategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
         }
-
     }
 }

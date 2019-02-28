@@ -22,7 +22,7 @@ namespace Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Name");
+                    b.Property<string>("Name");
 
                     b.Property<int?>("UserId");
 
@@ -30,15 +30,17 @@ namespace Server.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Server.Models.Movies", b =>
+            modelBuilder.Entity("Server.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int?>("CategoryId");
+
+                    b.Property<DateTime>("Created");
 
                     b.Property<int>("MovieId");
 
@@ -78,7 +80,7 @@ namespace Server.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Server.Models.Movies", b =>
+            modelBuilder.Entity("Server.Models.Movie", b =>
                 {
                     b.HasOne("Server.Models.Category", "Category")
                         .WithMany()

@@ -1,6 +1,6 @@
 FROM microsoft/dotnet:sdk AS build-env
 
-WORKDIR /server
+WORKDIR /Server
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./
@@ -12,6 +12,6 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM microsoft/dotnet:aspnetcore-runtime
-WORKDIR /server
-COPY --from=build-env /server/out .
-ENTRYPOINT ["dotnet", "server.dll"]
+WORKDIR /Server
+COPY --from=build-env /Server/out .
+ENTRYPOINT ["dotnet", "Server.dll"]

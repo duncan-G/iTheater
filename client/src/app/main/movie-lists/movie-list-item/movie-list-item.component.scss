@@ -1,0 +1,26 @@
+app-movie-list-item {
+  background: #fff;
+  max-width: 300px;
+  min-width: 300px;
+  border-radius: 8px;
+  border: 1px solid;
+  border-color: rgba(0,0,0,.12);
+  margin: 10px;
+  cursor: pointer;
+
+  .image-container {
+    height: 400px;
+    vertical-align: top;
+    border: none;
+    overflow: hidden;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .list-name {
+    margin-left: 25px;
+  }
+}

@@ -1,3 +1,8 @@
-<p>
-  movie-lists works!
-</p>
+<div id="movie-lists" fxFlex fxLayout="column">
+  <div id="all-lists">
+    <div class="movie-items-wrapper">
+      <app-movie-list-item *ngFor="let list of movieLists" [list]="list">
+      </app-movie-list-item>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
-import { MovieListsComponent } from './movie-lists.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NguCarouselModule  } from '@ngu/carousel';
 import { SharedModule } from 'src/app/shared/shared.modules';
+import { MovieListsComponent } from './movie-lists.component';
+import { MovieListItemComponent } from './movie-list-item/movie-list-item.component';
 
 const routes: Routes = [
     {
@@ -10,10 +12,11 @@ const routes: Routes = [
     }
   ];
 @NgModule({
-    declarations: [MovieListsComponent],
+    declarations: [MovieListsComponent, MovieListItemComponent],
     imports: [
         RouterModule.forChild(routes),
+        NguCarouselModule,
         SharedModule
-    ]
+    ],
 })
 export class MovieListsModule {}

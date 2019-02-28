@@ -4,7 +4,7 @@ import { RouterModule } from "@angular/router";
 
 const routes = [
   {
-    path: "my-theater",
+    path: "my-theater/:movie-list",
     component: MovieListComponent
   }
 ];

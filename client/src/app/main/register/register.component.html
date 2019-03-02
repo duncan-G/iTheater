@@ -55,8 +55,9 @@
         <button
           mat-raised-button
           color="primary"
+          [disabled]="registerForm.invalid"
           class="submit-button"
-          aria-label="LOG IN"
+          (click)="handleRegister()"
         >
           Register
         </button>

@@ -5,6 +5,9 @@
       <div class="title">LOGIN TO YOUR ACCOUNT</div>
 
       <form name="loginForm" [formGroup]="loginForm" novalidate>
+        <div class="form-error" *ngIf="loginError">
+            {{loginError}}
+        </div>
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" />
@@ -35,7 +38,8 @@
           mat-raised-button
           color="primary"
           class="submit-button"
-          aria-label="LOG IN"
+          [disabled]="loginForm.invalid"
+          (click)="handleLogin()"
         >
           LOGIN
         </button>

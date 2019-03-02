@@ -7,7 +7,7 @@ namespace Server.Models {
         public int MovieId { get; set; }
         public int Rating { get; set; }
         public DateTime Created { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual MovieList MovieList { get; set; }
         public virtual User User { get; set; }
     }
 }

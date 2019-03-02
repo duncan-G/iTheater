@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Helpers;
 using Server.Models;
+using Server.Services;
 
 namespace Server {
     public class Startup {
@@ -28,6 +29,7 @@ namespace Server {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+            services.AddCors ();
             services.AddDbContext<DataContext> (opts =>
                 opts.UseMySql (Configuration.GetConnectionString ("DefaultConnection")));
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2);
@@ -50,15 +52,14 @@ namespace Server {
                 .AddJwtBearer (opts => {
                     opts.Events = new JwtBearerEvents {
                         OnTokenValidated = context => {
-                            var dataContext = context.HttpContext.RequestServices.GetRequiredService<DataContext>();
-                            var userId = int.Parse(context.Principal.Identity.Name);
-                            var user = dataContext.Users.Find(userId);
-                            System.Console.WriteLine(userId);
-                            if (user == null)
-                            {
-                                context.Fail("Unauthorized");
+                            var dataContext = context.HttpContext.RequestServices.GetRequiredService<DataContext> ();
+                            var userId = int.Parse (context.Principal.Identity.Name);
+                            var user = dataContext.Users.Find (userId);
+                            System.Console.WriteLine (userId);
+                            if (user == null) {
+                                context.Fail ("Unauthorized");
                             }
-                            
+
                             return Task.CompletedTask;
                         }
                     };
@@ -71,6 +72,10 @@ namespace Server {
                         ValidateAudience = false
                     };
                 });
+                
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService> ();
+            services.AddScoped<IMovieListService, MovieListService> ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,7 +87,12 @@ namespace Server {
                 app.UseHsts ();
             }
 
-            app.UseAuthentication();
+            app.UseCors (opts => opts
+                .AllowAnyOrigin ()
+                .AllowAnyMethod ()
+                .AllowAnyHeader ());
+
+            app.UseAuthentication ();
             app.UseHttpsRedirection ();
             app.UseMvc ();
         }

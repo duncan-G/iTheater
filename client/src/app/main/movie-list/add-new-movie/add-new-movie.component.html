@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Add New Movie</h2>
+<mat-dialog-content>
+  <div class="search-bar">
+    <label for="search-input"> </label>
+    <input
+      id="search-input"
+      type="text"
+      placeholder="Search"
+      #input
+    />
+    <mat-icon matSuffix class="s-24 secondary-text">search</mat-icon>
+  </div>
+  <div class="search-results">
+    <app-movie-search-results *ngIf="searchResults" [movies]="searchResults"></app-movie-search-results>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button color="primary" mat-raised-button [mat-dialog-close]>
+    Close
+  </button>
+</mat-dialog-actions>

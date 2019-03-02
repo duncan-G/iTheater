@@ -1,0 +1,30 @@
+app-movie-item {
+  background: #fff;
+  max-width: 300px;
+  min-width: 300px;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+
+  .image-container {
+    height: 400px;
+    vertical-align: top;
+    overflow: hidden;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .movie-name {
+    margin-left: 25px;
+    margin-right: 25px;
+
+    h3 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+  }
+}

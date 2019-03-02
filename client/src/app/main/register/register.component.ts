@@ -7,6 +7,8 @@ import {
   AbstractControl,
   ValidationErrors
 } from "@angular/forms";
+import { AuthService } from "src/app/core/services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -16,16 +18,42 @@ import {
 })
 export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
+  public registerError: string;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.registerForm = this._formBuilder.group({
-      name: ["", Validators.required],
+    this.registerForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
       passwordConfirm: ["", [Validators.required, confirmPasswordValidator]]
     });
+  }
+
+  handleRegister() {
+    const { email, password } = this.registerForm.value;
+    this.authService
+      .register(email, password)
+      .subscribe(
+        () => this.router.navigateByUrl("/my-theater"),
+        error => this.handleError(error)
+      );
+  }
+
+  handleError(error) {
+    if (error.status >= 400 && error.status < 500) {
+      this.registerError = error.error.message;
+    } else if (error.status >= 500) {
+      // Show snackbar here
+      console.error(error);
+    } else {
+      // No idea. Log this
+      console.log(error);
+    }
   }
 }
 

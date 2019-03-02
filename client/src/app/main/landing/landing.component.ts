@@ -14,7 +14,6 @@ export class LandingComponent implements OnInit {
 
   constructor() {
     this.popularMovies = popularMovies.results;
-    console.log(this.popularMovies);
   }
 
   ngOnInit() {}

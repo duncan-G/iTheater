@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RegisterComponent } from "./register.component";
 import { RouterModule } from "@angular/router";
-import { SharedModule } from "src/app/shared/shared.modules";
+import { SharedModule } from "src/app/shared/shared.module";
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule } from "@angular/material";
 
 const routes = [

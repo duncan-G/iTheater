@@ -117,10 +117,24 @@ namespace Server.Controllers {
         [HttpPut ("{movieListId}")]
         public async Task<ActionResult<MovieListDto>> Put (int movieListId, [FromBody] MovieListDto movieListDto) {
             var userId = int.Parse (User.Identity.Name);
-
+            var t =  movieListDto.name == null;
+            System.Console.WriteLine(t.ToString());
             try {
-                var movieList = await _movieListService.Update (userId, movieListId, movieListDto.name);
-                return Ok (_entityDtoMapper.Map<MovieListDto> (movieList));
+                MovieList movieList;
+                if (movieListDto.name != null) {
+                    movieList = await _movieListService.Update (userId, movieListId, movieListDto.name);
+                } else if (movieListDto.defaultImageUrl != null) {
+                    movieList = await _movieListService.UpdateDefaultImage (userId, movieListId, movieListDto.defaultImageUrl);
+                } else {
+                    movieList = null;
+                }
+
+                if (movieList == null) {
+                    return BadRequest (new { message = "Incorrect fields!" });
+                } else {
+                    return Ok (_entityDtoMapper.Map<MovieListDto> (movieList));
+                }
+
             } catch (AppException ex) {
                 return BadRequest (new { message = ex.Message });
             }

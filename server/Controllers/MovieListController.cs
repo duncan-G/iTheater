@@ -62,18 +62,18 @@ namespace Server.Controllers {
         // GET /api/movielists/{movieSlug}
         [AllowAnonymous]
         [HttpGet ("{movieListSlug}")]
-        public ActionResult<IEnumerable<MovieListDto>> GetMovieList (string movieListSlug, [FromQuery (Name = "privacy")] string privacy) {
+        public ActionResult<MovieListDto> GetMovieList (string movieListSlug, [FromQuery (Name = "privacy")] string privacy) {
             var userId = int.Parse (User.Identity.Name);
 
-            IEnumerable<Movie> movies;
+            MovieList movieList;
             try {
                 if (privacy == "public") {
-                    movies = _movieService.GetAllInPublicList (movieListSlug);
+                    movieList = _movieListService.GetPublic (movieListSlug);
                 } else {
-                    movies = _movieService.GetAllInMovieList (userId, movieListSlug);
+                    movieList = _movieListService.Get (userId, movieListSlug);
                 }
 
-                return Ok (_entityDtoMapper.Map<IEnumerable<MovieDto>> (movies));
+                return Ok (_entityDtoMapper.Map<MovieListDto> (movieList));
             } catch (AppException ex) {
                 return BadRequest (new { message = ex.Message });
 

@@ -12,7 +12,9 @@ namespace Server.Services {
     public interface IMovieListService {
         IQueryable<MovieList> GetAllByUserId (int userId);
         IQueryable<MovieList> GetAllPublic ();
-        Task<MovieList> Get (string slug);
+        MovieList Get (int userId, string slug);
+        MovieList GetPublic (string slug);
+
         Task<MovieList> Create (int userId, MovieList movieList);
         Task<MovieList> Update (int userId, int movieListId, string name);
         void UpdateDefaultImage (int movieListId, string defaultImageUrl);
@@ -32,6 +34,15 @@ namespace Server.Services {
 
         public IQueryable<MovieList> GetAllPublic () {
             return _context.MovieLists.Where (_movieList => _movieList.Privacy == false);
+        }
+
+        public MovieList Get (int userId, string slug) {
+            return _context.MovieLists.SingleOrDefault (_movieList =>
+                (_movieList.Slug == slug && _movieList.UserId == userId));
+        }
+
+        public MovieList GetPublic (string slug) {
+            return _context.MovieLists.SingleOrDefault (_movieList => _movieList.Slug == slug);
         }
 
         public Task<MovieList> Get (string slug) {

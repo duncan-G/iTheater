@@ -5,8 +5,7 @@ import {
   ViewChild,
   ElementRef
 } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { fromEvent, Observable, from, EMPTY, timer } from "rxjs";
+import { fromEvent, Observable, from} from "rxjs";
 import {
   map,
   debounceTime,
@@ -15,7 +14,7 @@ import {
   switchMap
 } from "rxjs/operators";
 import { MoviesService } from "src/app/core/services/movies.service";
-import { Movie } from "src/app/core/models/movie.interface";
+import { IMovie } from "src/app/core/models/movie.interface";
 
 @Component({
   selector: "app-add-new-movie",
@@ -29,10 +28,9 @@ export class AddNewMovieComponent implements OnInit {
 
   private input$: Observable<any>;
 
-  public searchResults: Movie[];
+  public searchResults: IMovie[];
 
   constructor(
-    private formBuilder: FormBuilder,
     private movieService: MoviesService
   ) {}
 

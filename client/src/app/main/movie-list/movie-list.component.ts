@@ -3,8 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { MatDialog, MatDialogRef } from "@angular/material";
 
 import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
-import { Movie } from "src/app/core/models/movie.interface";
-import { MovieList } from "src/app/core/models/movie-list.interface";
+import { IMovie } from "src/app/core/models/movie.interface";
+import { IMovieList } from "src/app/core/models/movie-list.interface";
 import { MovieListsService } from "src/app/core/services/movie-lists.service";
 import { Subscription } from "rxjs";
 
@@ -19,8 +19,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
   private movieListSubscription: Subscription;
   private moviesSubscription: Subscription;
 
-  public movieList: MovieList;
-  public movies: Movie[] = [];
+  public movieList: IMovieList;
+  public movies: IMovie[] = [];
   public loadingList = true;
   public loadingMovies = true;
 

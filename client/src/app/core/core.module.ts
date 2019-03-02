@@ -6,10 +6,14 @@ import { ReverseAuthGuard } from './guards/reverse.auth.guard';
 import { AuthService } from "./services/auth.service";
 import { MovieListsService } from './services/movie-lists.service';
 import { MoviesService } from './services/movies.service';
+import { ItheaterHttpService } from './services/itheater.http.service';
+import { MoviesDbService } from './services/moviesdb.http.service';
 
 @NgModule({
   providers: [
     AuthService,
+    ItheaterHttpService,
+    MoviesDbService,
     MoviesService,
     MovieListsService,
     AuthGuard,

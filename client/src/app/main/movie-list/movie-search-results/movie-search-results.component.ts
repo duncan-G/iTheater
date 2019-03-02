@@ -8,8 +8,9 @@ import {
 import { environment } from "src/environments/environment";
 import { MoviesService } from "src/app/core/services/movies.service";
 import { MovieListsService } from "src/app/core/services/movie-lists.service";
-import { MovieList } from "src/app/core/models/movie-list.interface";
+import { IMovieList } from "src/app/core/models/movie-list.interface";
 import { Subscription } from "rxjs";
+import { IMovie } from "src/app/core/models/movie.interface";
 
 @Component({
   selector: "app-movie-search-results",
@@ -18,8 +19,8 @@ import { Subscription } from "rxjs";
   encapsulation: ViewEncapsulation.None
 })
 export class MovieSearchResultsComponent implements OnInit, OnDestroy {
-  @Input() movies: any[];
-  private movieList: MovieList;
+  @Input() movies: IMovie[];
+  private movieList: IMovieList;
   private movieListSubscription: Subscription;
   public posterImageBaseUrl = environment.posterSmallBaseUrl;
 
@@ -37,15 +38,20 @@ export class MovieSearchResultsComponent implements OnInit, OnDestroy {
   handleAddMovie(movie) {
     if (!this.movieList) {
       //Something went really wrong
-      this.handleError();
+      this.handleNoMovieListError();
     } else {
       movie.movieListId = this.movieList.id;
       this.movieService
         .addMovieToList(movie)
-        .subscribe(() => this.handleSuccess(), error => this.handleError());
+        .subscribe(
+          () => this.handleSuccess(),
+          error => this.handleError(error)
+        );
 
-      if(!this.movieList.defaultImageUrl) {
-        this.movieListsService.addDefaultImage(this.movieList.id, movie.posterPath)
+      if (!this.movieList.defaultImageUrl) {
+        this.movieListsService.updateMovieList(this.movieList.id, {
+          defaultImageUrl: movie.posterPath
+        });
       }
     }
   }
@@ -54,7 +60,13 @@ export class MovieSearchResultsComponent implements OnInit, OnDestroy {
     console.log("working");
   }
 
-  handleError() {}
+  handleError(error) {
+    console.error(error);
+  }
+
+  handleNoMovieListError() {
+    console.log('what!');
+  }
 
   ngOnDestroy() {
     this.movieListSubscription.unsubscribe();

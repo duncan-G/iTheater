@@ -1,0 +1,20 @@
+<div id="movie-container" fxFlex fxLayout="column">
+  <div id="movie-wrapper">
+    <div id="background-image">
+      <img [src]="imageBaseUrl + movie.backdrop_path" />
+    </div>
+    <h1 id="movie-title">
+      {{ movie.title }}
+      <span
+        ><bar-rating
+          [(rate)]="rating"
+          [max]="5"
+          [theme]="'stars'"
+        ></bar-rating
+      ></span>
+    </h1>
+    <div id="movie">
+      <div id="iframe-wrapper" [innerHtml]="videoIframe"></div>
+    </div>
+  </div>
+</div>

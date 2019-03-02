@@ -1,9 +1,12 @@
 // Perfect scrollbar
 @import '~perfect-scrollbar/css/perfect-scrollbar';
 
+// Bar rating
+@import '~ngx-bar-rating/themes/br-stars-theme';
 
 // Include core Angular Material styles
 @import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @include mat-core();
 
 // Partials

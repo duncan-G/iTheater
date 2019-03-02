@@ -14,10 +14,9 @@ namespace Server.Services {
         IQueryable<MovieList> GetAllPublic ();
         MovieList Get (int userId, string slug);
         MovieList GetPublic (string slug);
-
         Task<MovieList> Create (int userId, MovieList movieList);
         Task<MovieList> Update (int userId, int movieListId, string name);
-        void UpdateDefaultImage (int movieListId, string defaultImageUrl);
+        Task<MovieList> UpdateDefaultImage (int userId, int movieListId, string defaultImageUrl);
         void Delete (int userId, int movieListId);
     }
 
@@ -58,10 +57,11 @@ namespace Server.Services {
                 throw new AppException ("Movie List already exists!");
 
             movieList.UserId = userId;
-            movieList.Slug = GeneralHelpers.Slugify (name, movieList.Id);
             movieList.Created = DateTime.Now;
 
             await _context.MovieLists.AddAsync (movieList);
+            await _context.SaveChangesAsync ();
+            movieList.Slug = GeneralHelpers.Slugify (name, movieList.Id);
             await _context.SaveChangesAsync ();
             return movieList;
         }
@@ -81,7 +81,7 @@ namespace Server.Services {
             return movieList;
         }
 
-        public async void UpdateDefaultImage (int movieListId, string defaultImageUrl) {
+        public async Task<MovieList> UpdateDefaultImage (int userId, int movieListId, string defaultImageUrl) {
             if (string.IsNullOrWhiteSpace (defaultImageUrl))
                 throw new AppException ("Invalid image url.");
 
@@ -91,6 +91,8 @@ namespace Server.Services {
             }
             movieList.DefaultImageUrl = defaultImageUrl;
             await _context.SaveChangesAsync ();
+
+            return movieList;
         }
 
         public void Delete (int userId, int movieListId) {

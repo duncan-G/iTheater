@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { MoviesService } from "src/app/core/services/movies.service";
+import { MovieListsService } from "src/app/core/services/movie-lists.service";
 
 @Component({
   selector: "app-add-new-list",
@@ -14,22 +14,28 @@ export class AddNewListComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private moviesService: MoviesService
+    private movieListService: MovieListsService
   ) {}
 
   ngOnInit(): void {
     this.addNewListForm = this.formBuilder.group({
       name: ["", [Validators.required]],
-      privacy: [false, Validators.required]
+      privacy: [true, Validators.required]
     });
   }
 
   handleSubmit() {
-    this.moviesService.addMovieToList(this.addNewListForm.value);
+    this.movieListService
+      .addMovieList(this.addNewListForm.value)
+      .subscribe(
+        slug => this.handleSuccess(slug),
+        error => this.handleError(error)
+      );
   }
 
-  handleSuccess(data) {
-    console.log(data);
+  handleSuccess(slug) {
+    console.log(slug);
+    this.router.navigateByUrl("/my-theater/" + slug);
   }
 
   handleError(error) {

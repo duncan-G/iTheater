@@ -1,10 +1,10 @@
 <div id="movie-list" fxFlex fxLayout="column">
   <div id="all-movies">
+    <div id="movie-name">
+      <h1 *ngIf="movieList">{{ movieList.name }}</h1>
+    </div>
     <div class="movie-items-wrapper">
-      <div
-        class="add-btn-container"
-        *ngIf="movieLists && movieLists.length > 0"
-      >
+      <div class="add-btn-container" *ngIf="movies.length > 0">
         <button
           (click)="openDialog()"
           mat-fab
@@ -14,7 +14,18 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div class="no-lists" *ngIf="!movieLists || movieLists.length === 0">
+
+      <div class="delete-btn-container">
+        <button
+          mat-fab
+          class="delete-btn"
+          matTooltip="Delete list"
+        >
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+
+      <div class="no-lists" *ngIf="movies.length === 0">
         <h1 class="no-lists-title">No Movies Here</h1>
         <button
           (click)="openDialog()"
@@ -25,6 +36,7 @@
           ADD A MOVIE
         </button>
       </div>
+
       <app-movie-item
         *ngFor="let movie of movies"
         [movie]="movie"

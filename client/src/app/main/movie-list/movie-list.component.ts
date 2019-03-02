@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { movieListsWithMovies } from "src/app/fake-db/movie-lists";
 import { MatDialog, MatDialogRef } from "@angular/material";
 
 import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
+import { Movie } from "src/app/core/models/movie.interface";
+import { MovieList } from "src/app/core/models/movie-list.interface";
+import { MovieListsService } from "src/app/core/services/movie-lists.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-movie-list",
@@ -11,20 +14,38 @@ import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
   styleUrls: ["./movie-list.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class MovieListComponent implements OnInit {
-  private moviesList: any;
-  public movies: any[];
-  public listName: string;
+export class MovieListComponent implements OnInit, OnDestroy {
   private dialogRef: MatDialogRef<AddNewMovieComponent>;
+  private movieListSubscription: Subscription;
+  private moviesSubscription: Subscription;
 
-  constructor(private router: ActivatedRoute, private dialog: MatDialog) {
-    this.moviesList = movieListsWithMovies;
+  public movieList: MovieList;
+  public movies: Movie[] = [];
+  public loadingList = true;
+  public loadingMovies = true;
+
+  constructor(
+    private router: ActivatedRoute,
+    private dialog: MatDialog,
+    private movieListService: MovieListsService
+  ) {
+    this.movieListSubscription = this.movieListService.moviesInCurrentList$.subscribe(
+      data => {
+        this.movies = data;
+      }
+    );
+    this.moviesSubscription = this.movieListService.currentMovieList$.subscribe(
+      data => {
+        console.log('data', data);
+        this.movieList = data;
+      }
+    );
   }
 
   ngOnInit() {
-    this.router.params.subscribe(({ listName }) => {
-      this.listName = listName;
-      this.movies = this.moviesList[listName];
+    this.router.params.subscribe(({ listSlug }) => {
+      this.getMovieList(listSlug);
+      this.getMovies(listSlug);
     });
   }
 
@@ -35,5 +56,33 @@ export class MovieListComponent implements OnInit {
       height: "60%",
       maxHeight: "800px"
     });
+  }
+
+  getMovies(slug) {
+    this.movieListService
+      .getMoviesOnListBySlug(slug)
+      .subscribe(
+        () => (this.loadingMovies = false),
+        error => console.error(error)
+      );
+  }
+
+  getMovieList(slug) {
+    const movieList = this.movieListService.searchForMovieList(slug); // Do refetch data if it exists
+    if (movieList) {
+      this.movieListService.saveCurrentList(movieList);
+    } else {
+      this.movieListService
+        .getMovieList(slug)
+        .subscribe(
+          () => (this.loadingList = false),
+          error => console.error(error)
+        );
+    }
+  }
+
+  ngOnDestroy() {
+    this.movieListSubscription.unsubscribe();
+    this.moviesSubscription.unsubscribe();
   }
 }

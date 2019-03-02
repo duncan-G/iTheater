@@ -1,7 +1,8 @@
 export interface Movie {
-    id: number,
-    title: string,
-    poster_path: string,
-    overview: string,
-    release_date: string
+  id: number;
+  title: string;
+  posterPath: string;
+  releaseDate: string;
+  moviesDbId?: number;
+  movieListId?: number;
 }

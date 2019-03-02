@@ -3,5 +3,6 @@ export interface Movie {
   title: string;
   posterPath: string;
   releaseDate: string;
+  moviesDbId?: number;
   movieListId?: number;
 }

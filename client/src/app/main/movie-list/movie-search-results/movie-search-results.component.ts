@@ -43,6 +43,10 @@ export class MovieSearchResultsComponent implements OnInit, OnDestroy {
       this.movieService
         .addMovieToList(movie)
         .subscribe(() => this.handleSuccess(), error => this.handleError());
+
+      if(!this.movieList.defaultImageUrl) {
+        this.movieListsService.addDefaultImage(this.movieList.id, movie.posterPath)
+      }
     }
   }
 

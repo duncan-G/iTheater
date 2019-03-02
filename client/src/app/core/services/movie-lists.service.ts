@@ -56,7 +56,6 @@ export class MovieListsService {
   }
 
   saveMoviesInCurrentList(data) {
-    console.log(data);
     this.moviesInCurrentListSubject.next(data);
   }
 
@@ -96,10 +95,38 @@ export class MovieListsService {
   addMovieToList(movie: Movie) {
     const currentMovies = this.moviesInCurrentListSubject.value;
 
-    if (currentMovies === null) { // This case, in general. Should not happen.
+    if (currentMovies === null) {
+      // This case, in general. Should not happen.
       this.moviesInCurrentListSubject.next([movie]);
     } else {
-      this.moviesInCurrentListSubject.next([movie, ... currentMovies])
+      this.moviesInCurrentListSubject.next([movie, ...currentMovies]);
+    }
+  }
+
+  addDefaultImage(movieListId: number, defaultImageUrl: string) {
+    this.http
+      .put<MovieList>(this.movieListUrl + movieListId, {
+        defaultImageUrl
+      })
+      .subscribe(data => this.updateMovieInList(data));
+  }
+
+  updateMovieInList(movieList: MovieList) {
+    if (
+      this.currentMovieListSubject.value &&
+      this.currentMovieListSubject.value.id === movieList.id
+    ) {
+      this.currentMovieListSubject.next(movieList);
+    }
+
+    if (this.movieListsSubject.value) {
+      const updatedList = this.movieListsSubject.value.map(_movieList => {
+        if (_movieList.id === movieList.id) {
+          return movieList;
+        }
+        return _movieList;
+      });
+      this.movieListsSubject.next(updatedList);
     }
   }
 

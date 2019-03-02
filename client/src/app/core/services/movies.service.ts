@@ -50,19 +50,21 @@ export class MoviesService {
       return relevantKeys.reduce(
         (movie, key) => ({
           ...movie,
-          [this.camelCaseKey(key)]: movieResult[key]
+          [this.correctKey(key)]: movieResult[key]
         }),
         {}
       ) as Movie;
     });
   }
 
-  private camelCaseKey(key) {
+  private correctKey(key) {
     switch (key) {
       case "poster_path":
         return "posterPath";
       case "release_data":
         return "releaseDate";
+      case "id":
+        return "moviesDbId"
       default:
         return key;
     }

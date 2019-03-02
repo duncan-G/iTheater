@@ -15,6 +15,16 @@
         </button>
       </div>
 
+      <div class="delete-btn-container">
+        <button
+          mat-fab
+          class="delete-btn"
+          matTooltip="Delete list"
+        >
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+
       <div class="no-lists" *ngIf="movies.length === 0">
         <h1 class="no-lists-title">No Movies Here</h1>
         <button

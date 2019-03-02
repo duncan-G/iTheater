@@ -1,6 +1,6 @@
-<div [routerLink]="'/my-theater/' + list.name">
+<div [routerLink]="'/my-theater/' + list.slug">
   <div class="image-container">
-    <img [src]="imageBaseUrl + list.poster_path" />
+    <img [src]="list.defaultImageUrl" />
   </div>
   <div class="list-name">
     <h1>{{ list.name }}</h1>

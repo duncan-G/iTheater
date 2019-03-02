@@ -44,6 +44,10 @@ namespace Server.Services {
             return _context.MovieLists.SingleOrDefault (_movieList => _movieList.Slug == slug);
         }
 
+        public Task<MovieList> Get (string slug) {
+            return _context.MovieLists.SingleOrDefaultAsync(_movieList => _movieList.Slug == slug);
+        }
+        
         public async Task<MovieList> Create (int userId, MovieList movieList) {
             var name = movieList.Name;
             if (string.IsNullOrWhiteSpace (name))

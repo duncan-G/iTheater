@@ -42,11 +42,69 @@ namespace Server.Models {
                         UserId = 1,
                         Privacy = (index % 2 == 0),
                         Created = DateTime.Now,
-                        DefaultImageUrl= "/assets/movie-poster-default.png"
+                        DefaultImageUrl = "/assets/movie-poster-default.png"
                 });
 
             builder.Entity<MovieList> ().HasData (
                 movieLists
+            );
+
+            builder.Entity<Movie> ().HasData (
+                new {
+                    Id = 1,
+                        MoviesDbId = 443055,
+                        Title = "Love of My Life",
+                        PosterPath = "/7b19Sh0Aef5vGa0OFtvJxLe2SK9.jpg",
+                        ReleaseDate = "2017-02-17",
+                        Rating = 5,
+                        Created = DateTime.Now,
+                        MovieListId = 1,
+                        UserId = 1
+                },
+                new {
+                    Id = 2,
+                        MoviesDbId = 454294,
+                        Title = "The Kid Who Would Be King",
+                        PosterPath = "/kBuvLX6zynQP0sjyqbXV4jNaZ4E.jpg",
+                        ReleaseDate = "2019-01-16",
+                        Rating = 3,
+                        Created = DateTime.Now,
+                        MovieListId = 1,
+                        UserId = 1
+                },
+                new {
+                    Id = 3,
+                        MoviesDbId = 33125,
+                        Title = "Border",
+                        PosterPath = "/mmGwawOiUaP4Nkr2b1k0xsVhuY5.jpg",
+                        ReleaseDate = "1997-07-13",
+                        Rating = 2,
+                        Created = DateTime.Now,
+                        MovieListId = 1,
+                        UserId = 1
+                },
+                new {
+                    Id = 4,
+                        MoviesDbId = 424783,
+                        Title = "Bumblebee",
+                        PosterPath = "/fw02ONlDhrYjTSZV8XO6hhU3ds3.jpg",
+                        ReleaseDate = "2018-12-15",
+                        Rating = 0,
+                        Created = DateTime.Now,
+                        MovieListId = 1,
+                        UserId = 1
+                },
+                new {
+                    Id = 5,
+                        MoviesDbId = 543103,
+                        Title = "Kamen Rider Heisei Generations FOREVER",
+                        PosterPath = "/6sOFQDlkY6El1B2P5gklzJfVdsT.jpg",
+                        ReleaseDate = "2018-12-22",
+                        Rating = 0,
+                        Created = DateTime.Now,
+                        MovieListId = 1,
+                        UserId = 1
+                }
             );
         }
     }

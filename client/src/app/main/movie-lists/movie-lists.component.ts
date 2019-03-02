@@ -22,7 +22,7 @@ export class MovieListsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.movieListService.fetchData().subscribe(() => {
+    this.movieListService.getMovieLists().subscribe(() => {
       this.movieListService.movieLists.subscribe(
         data => (this.movieLists = data)
       );

@@ -25,6 +25,12 @@ app-movie-item {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        margin-bottom: 5px;
     }
+  }
+
+  .user-ratting {
+    display: flex;
+    justify-content: center;
   }
 }

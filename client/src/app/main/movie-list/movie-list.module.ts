@@ -18,7 +18,7 @@ import { MovieSearchResultsComponent } from './movie-search-results/movie-search
 
 const routes = [
   {
-    path: "my-theater/:listName",
+    path: "my-theater/:listSlug",
     component: MovieListComponent
   }
 ];

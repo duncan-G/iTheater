@@ -9,6 +9,5 @@ namespace Server.Dtos {
         public string posterPath { get; set; }
         public DateTime created { get; set; }
         public int movieListId { get; set;}
-        public virtual MovieListDto movieList { get; set; }
     }
 }

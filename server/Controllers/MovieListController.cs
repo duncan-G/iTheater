@@ -59,12 +59,33 @@ namespace Server.Controllers {
             return Ok (_entityDtoMapper.Map<IEnumerable<MovieListDto>> (movieLists));
         }
 
+        // GET /api/movielists/{movieSlug}
+        [AllowAnonymous]
+        [HttpGet ("{movieListSlug}")]
+        public ActionResult<IEnumerable<MovieListDto>> GetMovieList (string movieListSlug, [FromQuery (Name = "privacy")] string privacy) {
+            var userId = int.Parse (User.Identity.Name);
+
+            IEnumerable<Movie> movies;
+            try {
+                if (privacy == "public") {
+                    movies = _movieService.GetAllInPublicList (movieListSlug);
+                } else {
+                    movies = _movieService.GetAllInMovieList (userId, movieListSlug);
+                }
+
+                return Ok (_entityDtoMapper.Map<IEnumerable<MovieDto>> (movies));
+            } catch (AppException ex) {
+                return BadRequest (new { message = ex.Message });
+
+            }
+        }
+
         // GET /api/movielists/{movieSlug}/movies
         [AllowAnonymous]
         [HttpGet ("{movieListSlug}/movies")]
         public ActionResult<IEnumerable<MovieListDto>> GetMovies (string movieListSlug, [FromQuery (Name = "privacy")] string privacy) {
             var userId = int.Parse (User.Identity.Name);
-            
+
             IEnumerable<Movie> movies;
             try {
                 if (privacy == "public") {

@@ -1,3 +1,36 @@
-<p>
-  movie-list works!
-</p>
+<div id="movie-list" fxFlex fxLayout="column">
+  <div id="all-movies">
+    <div class="movie-items-wrapper">
+      <div
+        class="add-btn-container"
+        *ngIf="movieLists && movieLists.length > 0"
+      >
+        <button
+          (click)="openDialog()"
+          mat-fab
+          class="add-btn"
+          matTooltip="Add new list"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="no-lists" *ngIf="!movieLists || movieLists.length === 0">
+        <h1 class="no-lists-title">No Movies Here</h1>
+        <button
+          (click)="openDialog()"
+          class="no-lists-button"
+          mat-raised-button
+          color="primary"
+        >
+          ADD A MOVIE
+        </button>
+      </div>
+      <app-movie-item
+        *ngFor="let movie of movies"
+        [movie]="movie"
+        [listName]="listName"
+      >
+      </app-movie-item>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="display-search-results">
+  <div class="empty-search-results" *ngIf="movies.length === 0">
+    <h1>No Movies Found</h1>
+  </div>
+  <div class="search-results" *ngFor="let movie of movies">
+    <div class="result-wrapper">
+      <div class="movie-image-wrapper">
+        <img [src]="posterImageBaseUrl + movie.poster_path" />
+      </div>
+      <div class="movie-content">
+        <h3 class="movie-title">{{ movie.title }}</h3>
+        <h5 class="movie-release-data">{{ movie.release_date }}</h5>
+        <p class="movie-overview">{{ movie.overview }}</p>
+      </div>
+      <div class="add-btn-wrapper">
+        <button
+          (click)="handleAddMovie(movie)"
+          mat-fab
+          class="add-btn"
+          matTooltip="Add movie"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</div>

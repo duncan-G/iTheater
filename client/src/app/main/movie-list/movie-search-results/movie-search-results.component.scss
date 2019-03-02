@@ -1,0 +1,63 @@
+app-movie-search-results {
+  .display-search-results {
+    .empty-search-results {
+      text-align: center;
+      font-size: 3em;
+    }
+
+    .search-results {
+      mat-divider {
+        margin: 5px 0;
+      }
+
+      .result-wrapper {
+        display: flex;
+        margin-bottom: 5px;
+        height: 140px;
+        overflow: hidden;
+
+        .movie-image-wrapper {
+          display: flex;
+          align-items: center;
+          width: 92px;
+          min-width: 92px;
+          margin-right: 15px;
+        }
+
+        .movie-content {
+          flex: 1 1 auto;
+
+          .movie-title {
+            margin-top: 0;
+            margin-bottom: 5px;
+          }
+          .movie-release-data {
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 5px;
+            color: #8d8d8d;
+          }
+        }
+
+        .add-btn-wrapper {
+          align-self: center;
+          text-align: right;
+          width: 100px;
+          min-width: 100px;
+
+          .add-btn {
+            background-color: #2196f3;
+
+            mat-icon {
+              color: #fff;
+            }
+          }
+
+          .add-btn:hover {
+            background-color: #1972bb;
+          }
+        }
+      }
+    }
+  }
+}

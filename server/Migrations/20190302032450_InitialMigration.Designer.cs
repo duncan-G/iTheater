@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.Models;
 
-namespace Server.Migrations
+namespace server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190301053218_AddDefaultImage")]
-    partial class AddDefaultImage
+    [Migration("20190302032450_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,21 +26,73 @@ namespace Server.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<int>("MovieId");
+                    b.Property<int>("MovieListId");
 
-                    b.Property<int?>("MovieListId");
+                    b.Property<int>("MoviesDbId");
+
+                    b.Property<string>("PosterPath");
 
                     b.Property<int>("Rating");
 
-                    b.Property<int?>("UserId");
+                    b.Property<string>("ReleaseDate");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieListId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Movies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4963),
+                            MovieListId = 1,
+                            MoviesDbId = 443055,
+                            PosterPath = "/7b19Sh0Aef5vGa0OFtvJxLe2SK9.jpg",
+                            Rating = 5,
+                            ReleaseDate = "2017-02-17"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(6246),
+                            MovieListId = 1,
+                            MoviesDbId = 454294,
+                            PosterPath = "/kBuvLX6zynQP0sjyqbXV4jNaZ4E.jpg",
+                            Rating = 3,
+                            ReleaseDate = "2019-01-16"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(6269),
+                            MovieListId = 1,
+                            MoviesDbId = 33125,
+                            PosterPath = "/mmGwawOiUaP4Nkr2b1k0xsVhuY5.jpg",
+                            Rating = 2,
+                            ReleaseDate = "1997-07-13"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(6273),
+                            MovieListId = 1,
+                            MoviesDbId = 424783,
+                            PosterPath = "/fw02ONlDhrYjTSZV8XO6hhU3ds3.jpg",
+                            Rating = 0,
+                            ReleaseDate = "2018-12-15"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(6277),
+                            MovieListId = 1,
+                            MoviesDbId = 543103,
+                            PosterPath = "/6sOFQDlkY6El1B2P5gklzJfVdsT.jpg",
+                            Rating = 0,
+                            ReleaseDate = "2018-12-22"
+                        });
                 });
 
             modelBuilder.Entity("Server.Models.MovieList", b =>
@@ -70,7 +122,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 90, DateTimeKind.Local).AddTicks(6991),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 920, DateTimeKind.Local).AddTicks(7144),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Horror",
                             Privacy = true,
@@ -80,7 +132,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(7943),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4146),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Sci Fi",
                             Privacy = false,
@@ -90,7 +142,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8062),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4311),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "2018",
                             Privacy = true,
@@ -100,7 +152,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8093),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4339),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "2017",
                             Privacy = false,
@@ -110,7 +162,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8121),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4363),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Action",
                             Privacy = true,
@@ -120,7 +172,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8152),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4394),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Drama",
                             Privacy = false,
@@ -130,7 +182,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8216),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4457),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "The Best",
                             Privacy = true,
@@ -140,7 +192,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8314),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4497),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Movie Ever",
                             Privacy = false,
@@ -150,7 +202,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8346),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4521),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Comedy",
                             Privacy = true,
@@ -160,7 +212,7 @@ namespace Server.Migrations
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2019, 2, 28, 21, 32, 18, 93, DateTimeKind.Local).AddTicks(8373),
+                            Created = new DateTime(2019, 3, 1, 19, 24, 49, 923, DateTimeKind.Local).AddTicks(4548),
                             DefaultImageUrl = "/assets/movie-poster-default.png",
                             Name = "Romance",
                             Privacy = false,
@@ -189,20 +241,17 @@ namespace Server.Migrations
                         {
                             Id = 1,
                             Email = "a@gmail.com",
-                            PasswordHash = new byte[] { 97, 178, 148, 43, 207, 15, 116, 160, 235, 24, 161, 6, 193, 183, 109, 223, 204, 151, 206, 148, 186, 251, 52, 87, 3, 235, 231, 93, 129, 104, 61, 79, 96, 105, 42, 121, 251, 216, 189, 141, 58, 94, 241, 175, 66, 242, 140, 51, 245, 52, 77, 111, 156, 82, 99, 31, 74, 122, 133, 231, 249, 105, 78, 178 },
-                            Salt = new byte[] { 222, 131, 249, 248, 251, 31, 22, 226, 148, 103, 168, 99, 168, 101, 243, 205, 171, 251, 180, 204, 55, 236, 23, 217, 151, 205, 100, 227, 27, 173, 84, 133, 26, 16, 83, 69, 229, 160, 202, 48, 251, 96, 191, 70, 122, 7, 90, 63, 156, 148, 172, 8, 248, 178, 71, 26, 65, 122, 27, 161, 96, 146, 65, 112, 246, 208, 230, 61, 228, 150, 202, 0, 102, 147, 2, 168, 216, 216, 180, 160, 239, 30, 245, 19, 109, 6, 251, 86, 113, 172, 175, 67, 56, 210, 120, 247, 93, 152, 139, 228, 204, 239, 120, 65, 92, 206, 2, 0, 178, 121, 181, 75, 89, 231, 100, 67, 7, 47, 142, 124, 208, 110, 194, 194, 25, 2, 134, 84 }
+                            PasswordHash = new byte[] { 193, 140, 159, 157, 95, 80, 73, 103, 191, 210, 209, 16, 129, 168, 139, 65, 78, 58, 25, 7, 154, 220, 112, 217, 174, 95, 21, 201, 175, 231, 51, 9, 128, 121, 149, 14, 49, 199, 56, 33, 140, 40, 37, 198, 217, 121, 66, 110, 23, 132, 36, 242, 110, 180, 2, 192, 93, 38, 202, 143, 127, 131, 179, 127 },
+                            Salt = new byte[] { 134, 145, 64, 164, 179, 224, 158, 219, 198, 2, 90, 61, 192, 208, 222, 53, 44, 100, 133, 147, 70, 11, 60, 72, 17, 252, 89, 174, 145, 125, 73, 82, 163, 163, 168, 79, 105, 26, 111, 65, 222, 62, 162, 255, 127, 132, 118, 10, 172, 145, 55, 169, 1, 98, 95, 210, 205, 201, 70, 219, 252, 150, 147, 245, 60, 149, 57, 100, 154, 140, 164, 188, 3, 235, 113, 43, 18, 187, 72, 192, 67, 146, 22, 254, 26, 124, 228, 63, 189, 49, 180, 190, 214, 193, 232, 255, 167, 28, 247, 162, 91, 144, 211, 193, 229, 62, 236, 223, 240, 192, 94, 193, 28, 227, 64, 17, 200, 146, 49, 23, 213, 80, 179, 240, 46, 125, 34, 197 }
                         });
                 });
 
             modelBuilder.Entity("Server.Models.Movie", b =>
                 {
                     b.HasOne("Server.Models.MovieList", "MovieList")
-                        .WithMany()
-                        .HasForeignKey("MovieListId");
-
-                    b.HasOne("Server.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Movies")
+                        .HasForeignKey("MovieListId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Server.Models.MovieList", b =>

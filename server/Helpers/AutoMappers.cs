@@ -8,8 +8,10 @@ namespace Server.Helpers {
         public AutoMappers () {
             CreateMap<User, UserDto> ();
             CreateMap<UserDto, User> ();
-            CreateMap<MovieList, MovieListDto>();
-            CreateMap<MovieListDto, MovieList>();
+            CreateMap<MovieList, MovieListDto> ();
+            CreateMap<MovieListDto, MovieList> ();
+            CreateMap<Movie, MovieDto> ();
+            CreateMap<MovieDto, Movie> ();
         }
     }
 }

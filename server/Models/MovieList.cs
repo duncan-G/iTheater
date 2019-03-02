@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Server.Models {
     public class MovieList {
@@ -10,5 +11,6 @@ namespace Server.Models {
         public DateTime Created { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public virtual ICollection<Movie> Movies { get; set;}
     }
 }

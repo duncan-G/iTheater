@@ -1,6 +1,30 @@
 <div id="movie-lists" fxFlex fxLayout="column">
   <div id="all-lists">
     <div class="movie-items-wrapper">
+      <div
+        class="add-btn-container"
+        *ngIf="movieLists && movieLists.length > 0"
+      >
+        <button
+          (click)="openDialog()"
+          mat-fab
+          class="add-btn"
+          matTooltip="Add new list"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="no-lists" *ngIf="!movieLists || movieLists.length === 0">
+        <h1 class="no-lists-title">No Movies Lists Here</h1>
+        <button
+          (click)="openDialog()"
+          class="no-lists-button"
+          mat-raised-button
+          color="primary"
+        >
+          ADD A LIST
+        </button>
+      </div>
       <app-movie-list-item *ngFor="let list of movieLists" [list]="list">
       </app-movie-list-item>
     </div>

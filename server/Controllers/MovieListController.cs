@@ -16,18 +16,21 @@ namespace Server.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class MovieListsController : ControllerBase {
-        IMapper _entityDtoMapper;
-        IMovieListService _movieListService;
+        private IMapper _entityDtoMapper;
+        private IMovieListService _movieListService;
+        private IMovieService _movieService;
 
         public MovieListsController (
             IMovieListService movieListService,
+            IMovieService movieService,
             IMapper mapper
         ) {
             _movieListService = movieListService;
+            _movieService = movieService;
             _entityDtoMapper = mapper;
         }
 
-        // POST /api/cateogires
+        // POST /api/movielists
         [HttpPost]
         public async Task<ActionResult<MovieListDto>> Create ([FromBody] MovieListDto movieListDto) {
             var movieList = _entityDtoMapper.Map<MovieList> (movieListDto);
@@ -40,8 +43,8 @@ namespace Server.Controllers {
             }
         }
 
-        // GET /api/categories
-        // Prefetch 10 or so movies in each category
+        // GET /api/movielists
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<MovieListDto>> Get ([FromQuery (Name = "privacy")] string privacy) {
             var userId = int.Parse (User.Identity.Name);
@@ -56,7 +59,49 @@ namespace Server.Controllers {
             return Ok (_entityDtoMapper.Map<IEnumerable<MovieListDto>> (movieLists));
         }
 
-        // DELETE /api/categories/{movieListId}
+        // GET /api/movielists/{movieSlug}
+        [AllowAnonymous]
+        [HttpGet ("{movieListSlug}")]
+        public ActionResult<IEnumerable<MovieListDto>> GetMovieList (string movieListSlug, [FromQuery (Name = "privacy")] string privacy) {
+            var userId = int.Parse (User.Identity.Name);
+
+            IEnumerable<Movie> movies;
+            try {
+                if (privacy == "public") {
+                    movies = _movieService.GetAllInPublicList (movieListSlug);
+                } else {
+                    movies = _movieService.GetAllInMovieList (userId, movieListSlug);
+                }
+
+                return Ok (_entityDtoMapper.Map<IEnumerable<MovieDto>> (movies));
+            } catch (AppException ex) {
+                return BadRequest (new { message = ex.Message });
+
+            }
+        }
+
+        // GET /api/movielists/{movieSlug}/movies
+        [AllowAnonymous]
+        [HttpGet ("{movieListSlug}/movies")]
+        public ActionResult<IEnumerable<MovieListDto>> GetMovies (string movieListSlug, [FromQuery (Name = "privacy")] string privacy) {
+            var userId = int.Parse (User.Identity.Name);
+
+            IEnumerable<Movie> movies;
+            try {
+                if (privacy == "public") {
+                    movies = _movieService.GetAllInPublicList (movieListSlug);
+                } else {
+                    movies = _movieService.GetAllInMovieList (userId, movieListSlug);
+                }
+
+                return Ok (_entityDtoMapper.Map<IEnumerable<MovieDto>> (movies));
+            } catch (AppException ex) {
+                return BadRequest (new { message = ex.Message });
+
+            }
+        }
+
+        // DELETE /api/movielists/{movieListId}
         [HttpDelete ("{movieListId}")]
         public ActionResult Delete (int movieListId) {
             var userId = int.Parse (User.Identity.Name);
@@ -68,7 +113,7 @@ namespace Server.Controllers {
             }
         }
 
-        // PUT /api/categories/{movieListId}
+        // PUT /api/movielists/{movieListId}
         [HttpPut ("{movieListId}")]
         public async Task<ActionResult<MovieListDto>> Put (int movieListId, [FromBody] MovieListDto movieListDto) {
             var userId = int.Parse (User.Identity.Name);

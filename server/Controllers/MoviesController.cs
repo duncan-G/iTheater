@@ -36,28 +36,6 @@ namespace Server.Controllers {
             }
         }
 
-        // Get /api/movies/{movieListId}
-        // Returns list of movies in movielist
-        [AllowAnonymous]
-        [HttpGet ("{movieListId}")]
-        public ActionResult<IEnumerable<MovieListDto>> Get (int movieListId, [FromQuery (Name = "privacy")] string privacy) {
-            var userId = int.Parse (User.Identity.Name);
-
-            IEnumerable<Movie> movies;
-            try {
-                if (privacy == "public") {
-                    movies = _movieService.GetAllInPublicList (movieListId);
-                } else {
-                    movies = _movieService.GetAllInMovieList (userId, movieListId);
-                }
-
-                return Ok (_entityDtoMapper.Map<IEnumerable<MovieDto>> (movies));
-            } catch (AppException ex) {
-                return BadRequest (new { message = ex.Message });
-
-            }
-        }
-
         // PUT /api/movies/{id}
         [HttpPut ("{id}")]
         public async Task<ActionResult<MovieDto>> Put (int id, [FromBody] MovieDto movieDto) {

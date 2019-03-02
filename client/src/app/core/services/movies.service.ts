@@ -57,13 +57,10 @@ export class MoviesService {
       ) as Movie;
     });
   }
-  getMovieBySlug() {}
 
   getMovieById() {}
 
   getMovies() {}
-
-  getMoviesByList(list: string) {}
 
   addMovieToList(list: string) {}
 

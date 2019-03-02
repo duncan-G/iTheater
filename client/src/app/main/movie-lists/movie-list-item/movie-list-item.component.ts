@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-movie-list-item',
@@ -14,7 +15,12 @@ export class MovieListItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.list);
+  }
+
+  getDefaultImageUrl(defaultImagePath) {
+    return defaultImagePath
+      ? this.imageBaseUrl + defaultImagePath
+      : environment.defaultPosterUrl;
   }
 
 }

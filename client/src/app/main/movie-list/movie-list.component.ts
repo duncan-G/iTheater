@@ -6,7 +6,7 @@ import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
 import { Movie } from "src/app/core/models/movie.interface";
 import { MovieList } from "src/app/core/models/movie-list.interface";
 import { MovieListsService } from "src/app/core/services/movie-lists.service";
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-movie-list",
@@ -31,7 +31,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
   ) {
     this.movieListSubscription = this.movieListService.moviesInCurrentList$.subscribe(
       data => {
-        (this.movies = data)
+        this.movies = data;
       }
     );
     this.moviesSubscription = this.movieListService.currentMovieList$.subscribe(
@@ -65,10 +65,17 @@ export class MovieListComponent implements OnInit, OnDestroy {
   }
 
   getMovieList(slug) {
-    this.movieListService.getMovieList(slug).subscribe(
-      () => (this.loadingList = false),
-      error => console.error(error)
-    );
+    const movieList = this.movieListService.searchForMovieList(slug); // Do refetch data if it exists
+    if (movieList) {
+      this.movieListService.saveCurrentList(movieList);
+    } else {
+      this.movieListService
+        .getMovieList(slug)
+        .subscribe(
+          () => (this.loadingList = false),
+          error => console.error(error)
+        );
+    }
   }
 
   ngOnDestroy() {

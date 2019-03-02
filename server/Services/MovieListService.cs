@@ -78,7 +78,7 @@ namespace Server.Services {
         }
 
         public void Delete (int userId, int movieListId) {
-            var movieList = new MovieList () { Id = userId, UserId = userId };
+            var movieList = new MovieList () { Id = movieListId, UserId = userId };
             _context.MovieLists.Attach (movieList);
             _context.MovieLists.Remove (movieList);
             _context.SaveChanges ();

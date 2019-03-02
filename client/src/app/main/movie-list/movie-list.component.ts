@@ -16,10 +16,10 @@ import { Subscription } from "rxjs";
 })
 export class MovieListComponent implements OnInit, OnDestroy {
   private dialogRef: MatDialogRef<AddNewMovieComponent>;
-  private movieList: MovieList;
   private movieListSubscription: Subscription;
   private moviesSubscription: Subscription;
 
+  public movieList: MovieList;
   public movies: Movie[] = [];
   public loadingList = true;
   public loadingMovies = true;
@@ -35,7 +35,10 @@ export class MovieListComponent implements OnInit, OnDestroy {
       }
     );
     this.moviesSubscription = this.movieListService.currentMovieList$.subscribe(
-      data => (this.movieList = data)
+      data => {
+        console.log('data', data);
+        this.movieList = data;
+      }
     );
   }
 

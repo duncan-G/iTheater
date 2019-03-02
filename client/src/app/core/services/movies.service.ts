@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { tap, map, shareReplay } from "rxjs/operators";
 import { MovieList } from "../models/movie-list.interface";
 import { Movie } from "../models/movie.interface";
+import { MovieListsService } from "./movie-lists.service";
 
 @Injectable()
 export class MoviesService {
@@ -15,7 +16,10 @@ export class MoviesService {
 
   public movies: Observable<MovieList[]>;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private movieListsService: MovieListsService
+  ) {
     this.moviesSubject = new BehaviorSubject<MovieList[]>([]);
     this.movies = this.moviesSubject.asObservable();
   }
@@ -40,29 +44,43 @@ export class MoviesService {
   }
 
   mapResults(results): Movie[] {
-    const relevantKeys = [
-      "id",
-      "title",
-      "poster_path",
-      "overview",
-      "release_date"
-    ];
+    const relevantKeys = ["id", "title", "poster_path", "release_date"];
+
     return results.map(movieResult => {
       return relevantKeys.reduce(
         (movie, key) => ({
           ...movie,
-          [key]: movieResult[key]
+          [this.camelCaseKey(key)]: movieResult[key]
         }),
         {}
       ) as Movie;
     });
   }
 
+  private camelCaseKey(key) {
+    switch (key) {
+      case "poster_path":
+        return "posterPath";
+      case "release_data":
+        return "releaseDate";
+      default:
+        return key;
+    }
+  }
+
   getMovieById() {}
 
   getMovies() {}
 
-  addMovieToList(list: string) {}
+  addMovieToList(movie: Movie) {
+    return this.http
+      .post<Movie>(this.moviesUrl, movie)
+      .pipe(tap(data => this.updateMovieList(data)));
+  }
+
+  updateMovieList(data) {
+    this.movieListsService.addMovieToList(data);
+  }
 
   updateMovie(id: number, rating: number) {}
 

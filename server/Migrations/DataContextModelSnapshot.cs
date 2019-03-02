@@ -46,7 +46,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3791),
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(4548),
                             MovieListId = 1,
                             MoviesDbId = 443055,
                             PosterPath = "/7b19Sh0Aef5vGa0OFtvJxLe2SK9.jpg",
@@ -57,7 +57,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(5061),
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(5950),
                             MovieListId = 1,
                             MoviesDbId = 454294,
                             PosterPath = "/kBuvLX6zynQP0sjyqbXV4jNaZ4E.jpg",
@@ -68,7 +68,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(5089),
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(5978),
                             MovieListId = 1,
                             MoviesDbId = 33125,
                             PosterPath = "/mmGwawOiUaP4Nkr2b1k0xsVhuY5.jpg",
@@ -79,7 +79,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(5093),
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(5982),
                             MovieListId = 1,
                             MoviesDbId = 424783,
                             PosterPath = "/fw02ONlDhrYjTSZV8XO6hhU3ds3.jpg",
@@ -90,7 +90,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(5097),
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(5986),
                             MovieListId = 1,
                             MoviesDbId = 543103,
                             PosterPath = "/6sOFQDlkY6El1B2P5gklzJfVdsT.jpg",
@@ -127,8 +127,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 0, DateTimeKind.Local).AddTicks(7014),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 913, DateTimeKind.Local).AddTicks(9439),
                             Name = "Horror",
                             Privacy = true,
                             Slug = "horror-1",
@@ -137,8 +136,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3064),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3620),
                             Name = "Sci Fi",
                             Privacy = false,
                             Slug = "sci-fi-2",
@@ -147,8 +145,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3171),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3759),
                             Name = "2018",
                             Privacy = true,
                             Slug = "2018-3",
@@ -157,8 +154,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3194),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3782),
                             Name = "2017",
                             Privacy = false,
                             Slug = "2017-4",
@@ -167,8 +163,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3222),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3810),
                             Name = "Action",
                             Privacy = true,
                             Slug = "action-5",
@@ -177,8 +172,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3297),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3842),
                             Name = "Drama",
                             Privacy = false,
                             Slug = "drama-6",
@@ -187,8 +181,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3364),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3928),
                             Name = "The Best",
                             Privacy = true,
                             Slug = "the-best-7",
@@ -197,8 +190,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3408),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(3976),
                             Name = "Movie Ever",
                             Privacy = false,
                             Slug = "movie-ever-8",
@@ -207,8 +199,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3431),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(4059),
                             Name = "Comedy",
                             Privacy = true,
                             Slug = "comedy-9",
@@ -217,8 +208,7 @@ namespace server.Migrations
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2019, 3, 1, 19, 44, 46, 3, DateTimeKind.Local).AddTicks(3455),
-                            DefaultImageUrl = "/assets/movie-poster-default.png",
+                            Created = new DateTime(2019, 3, 1, 22, 23, 35, 917, DateTimeKind.Local).AddTicks(4086),
                             Name = "Romance",
                             Privacy = false,
                             Slug = "romance-10",
@@ -246,8 +236,8 @@ namespace server.Migrations
                         {
                             Id = 1,
                             Email = "a@gmail.com",
-                            PasswordHash = new byte[] { 63, 111, 216, 25, 109, 75, 115, 126, 244, 217, 48, 110, 2, 25, 102, 19, 143, 10, 142, 198, 138, 141, 189, 84, 189, 159, 186, 9, 132, 185, 122, 150, 182, 251, 48, 220, 141, 253, 203, 44, 83, 153, 8, 245, 184, 125, 248, 237, 2, 156, 130, 1, 120, 15, 161, 43, 181, 185, 4, 25, 108, 9, 137, 4 },
-                            Salt = new byte[] { 130, 160, 141, 178, 244, 20, 34, 119, 67, 1, 212, 89, 186, 232, 170, 177, 5, 60, 119, 84, 25, 89, 241, 222, 113, 22, 153, 212, 175, 75, 52, 137, 30, 17, 99, 229, 204, 12, 82, 111, 188, 160, 63, 218, 52, 69, 51, 132, 87, 164, 35, 228, 67, 103, 196, 57, 246, 206, 108, 122, 202, 197, 64, 253, 233, 232, 29, 250, 238, 19, 11, 13, 67, 84, 0, 218, 198, 209, 23, 83, 47, 104, 40, 157, 61, 174, 158, 229, 111, 48, 19, 26, 68, 248, 237, 152, 146, 21, 152, 217, 135, 247, 207, 207, 78, 49, 24, 253, 93, 163, 7, 237, 57, 98, 29, 128, 248, 116, 247, 89, 138, 14, 44, 191, 97, 72, 99, 191 }
+                            PasswordHash = new byte[] { 245, 93, 80, 127, 131, 204, 237, 206, 177, 78, 81, 121, 245, 29, 216, 52, 214, 113, 124, 44, 96, 236, 100, 31, 16, 123, 82, 114, 72, 35, 53, 225, 143, 19, 243, 80, 33, 157, 44, 125, 235, 55, 40, 146, 99, 186, 218, 179, 76, 20, 133, 242, 76, 197, 206, 238, 206, 124, 202, 92, 38, 234, 105, 183 },
+                            Salt = new byte[] { 166, 81, 98, 16, 255, 247, 133, 186, 120, 72, 237, 112, 159, 18, 99, 212, 131, 159, 212, 124, 96, 113, 217, 36, 183, 208, 193, 229, 52, 243, 44, 239, 242, 0, 224, 107, 251, 183, 42, 188, 87, 4, 138, 58, 68, 240, 69, 26, 55, 167, 166, 95, 43, 215, 10, 171, 113, 227, 112, 149, 126, 5, 68, 59, 176, 210, 233, 59, 78, 175, 226, 44, 40, 92, 17, 162, 39, 245, 196, 63, 49, 29, 160, 63, 214, 175, 72, 116, 68, 181, 155, 43, 166, 32, 212, 237, 155, 93, 97, 178, 190, 145, 118, 77, 232, 92, 185, 151, 163, 21, 37, 158, 85, 60, 253, 114, 3, 75, 223, 86, 185, 107, 157, 159, 35, 22, 202, 79 }
                         });
                 });
 

@@ -42,7 +42,6 @@ namespace Server.Models {
                         UserId = 1,
                         Privacy = (index % 2 == 0),
                         Created = DateTime.Now,
-                        DefaultImageUrl = "/assets/movie-poster-default.png"
                 });
 
             builder.Entity<MovieList> ().HasData (

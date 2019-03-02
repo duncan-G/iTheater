@@ -54,11 +54,12 @@ namespace Server.Services {
                 throw new AppException ("Movie List already exists!");
 
             movieList.UserId = userId;
-            movieList.Slug = GeneralHelpers.Slugify (name, movieList.Id);
             movieList.Created = DateTime.Now;
 
             await _context.MovieLists.AddAsync (movieList);
             await _context.SaveChangesAsync ();
+            movieList.Slug = GeneralHelpers.Slugify (name, movieList.Id);
+            await _context.SaveChangesAsync();
             return movieList;
         }
 

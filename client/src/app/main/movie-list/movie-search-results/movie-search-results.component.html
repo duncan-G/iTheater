@@ -5,12 +5,11 @@
   <div class="search-results" *ngFor="let movie of movies">
     <div class="result-wrapper">
       <div class="movie-image-wrapper">
-        <img [src]="posterImageBaseUrl + movie.poster_path" />
+        <img [src]="posterImageBaseUrl + movie.posterPath" />
       </div>
       <div class="movie-content">
         <h3 class="movie-title">{{ movie.title }}</h3>
-        <h5 class="movie-release-data">{{ movie.release_date }}</h5>
-        <p class="movie-overview">{{ movie.overview }}</p>
+        <h5 class="movie-release-data">{{ movie.releaseDate }}</h5>
       </div>
       <div class="add-btn-wrapper">
         <button

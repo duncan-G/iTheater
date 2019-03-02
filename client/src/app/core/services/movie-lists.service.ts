@@ -70,7 +70,7 @@ export class MovieListsService {
   }
 
   getMovieList(slug) {
-    return this.http.get<MovieList>(this.movieListUrl).pipe(
+    return this.http.get<MovieList>(this.movieListUrl + slug).pipe(
       tap(data => this.saveCurrentList(data)),
       shareReplay()
     );
@@ -82,9 +82,7 @@ export class MovieListsService {
 
   addMovieList(data) {
     return this.http.post<MovieList>(this.movieListUrl, data).pipe(
-      tap(
-        data => this.updateMovieList(data),
-      ),
+      tap(data => this.updateMovieList(data)),
       map((data: MovieList) => data.slug),
 
       shareReplay()
@@ -93,6 +91,16 @@ export class MovieListsService {
 
   updateMovieList(data) {
     this.movieListsSubject.next([data, ...this.movieListsSubject.value]);
+  }
+
+  addMovieToList(movie: Movie) {
+    const currentMovies = this.moviesInCurrentListSubject.value;
+
+    if (currentMovies === null) { // This case, in general. Should not happen.
+      this.moviesInCurrentListSubject.next([movie]);
+    } else {
+      this.moviesInCurrentListSubject.next([movie, ... currentMovies])
+    }
   }
 
   deleteMovieList() {}

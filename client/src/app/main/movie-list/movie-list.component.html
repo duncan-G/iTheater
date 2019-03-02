@@ -1,11 +1,10 @@
 <div id="movie-list" fxFlex fxLayout="column">
   <div id="all-movies">
+    <div id="movie-name">
+      <h1 *ngIf="movieList">{{ movieList.name }}</h1>
+    </div>
     <div class="movie-items-wrapper">
-
-      <div
-        class="add-btn-container"
-        *ngIf="movies.length > 0"
-      >
+      <div class="add-btn-container" *ngIf="movies.length > 0">
         <button
           (click)="openDialog()"
           mat-fab

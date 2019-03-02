@@ -9,8 +9,8 @@ using Server.Models;
 namespace Server.Services {
 
     public interface IMovieService {
-        IQueryable<Movie> GetAllInMovieList (int userId, int movieListId);
-        IQueryable<Movie> GetAllInPublicList (int movieListId);
+        IQueryable<Movie> GetAllInMovieList (int userId, string movieListSlug);
+        IQueryable<Movie> GetAllInPublicList (string movieListSlug);
         Task<Movie> Create (int userId, Movie movie);
         Task<Movie> Update (int userId, int movieId, int rating);
         void Delete (int userId, int movieId);
@@ -25,22 +25,26 @@ namespace Server.Services {
             _context = context;
         }
 
-        public IQueryable<Movie> GetAllInMovieList (int userId, int movieListId) {
-            var movieList = _context.MovieLists.SingleOrDefault (_movieList => _movieList.Id == movieListId);
+        public IQueryable<Movie> GetAllInMovieList (int userId, string movieListSlug) {
+            var movieList = _context.MovieLists.SingleOrDefault (_movieList => _movieList.Slug == movieListSlug);
+            if (movieList == null)
+                throw new AppException("Movie list does not exist!");
 
             if (movieList.Privacy && movieList.UserId != userId)
                 throw new AppException ("Unauthorized");
 
-            return _context.Movies.Where (_movie => _movie.MovieListId == movieListId);
+            return _context.Movies.Where (_movie => _movie.MovieListId == movieList.Id);
         }
 
-        public IQueryable<Movie> GetAllInPublicList (int movieListId) {
-            var movieList = _context.MovieLists.SingleOrDefault (_movieList => _movieList.Id == movieListId);
-
+        public IQueryable<Movie> GetAllInPublicList (string movieListSlug) {
+            var movieList = _context.MovieLists.SingleOrDefault (_movieList => _movieList.Slug == movieListSlug);
+            if (movieList == null)
+                throw new AppException("Movie list does not exist!");
+                
             if (movieList.Privacy)
                 throw new AppException ("Unauthorized");
 
-            return _context.Movies.Where (_movie => _movie.MovieListId == movieListId);
+            return _context.Movies.Where (_movie => _movie.MovieListId == movieList.Id);
         }
 
         public async Task<Movie> Create (int userId, Movie movie) {

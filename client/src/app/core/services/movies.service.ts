@@ -26,7 +26,7 @@ export class MoviesService {
   }
 
   getMovieById(movieDbId: number) {
-    return this.moviesDbService.getMovie(movieDbId);
+    return this.moviesDbService.getSingleMovie(movieDbId);
   }
 
   getPopularMovies(page) {

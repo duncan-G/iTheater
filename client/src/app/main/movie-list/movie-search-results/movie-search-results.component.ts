@@ -49,9 +49,15 @@ export class MovieSearchResultsComponent implements OnInit, OnDestroy {
         );
 
       if (!this.movieList.defaultImageUrl) {
-        this.movieListsService.updateMovieList(this.movieList.id, {
-          defaultImageUrl: movie.posterPath
-        });
+        console.log("here");
+        this.movieListsService
+          .updateMovieList(this.movieList.id, {
+            defaultImageUrl: movie.posterPath
+          })
+          .subscribe(
+            () => this.handleSuccess(),
+            error => this.handleError(error)
+          );
       }
     }
   }
@@ -65,7 +71,7 @@ export class MovieSearchResultsComponent implements OnInit, OnDestroy {
   }
 
   handleNoMovieListError() {
-    console.log('what!');
+    console.log("what!");
   }
 
   ngOnDestroy() {

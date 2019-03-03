@@ -18,6 +18,11 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = this._authService.getToken();
 
+    // Ignore movie db requests
+    if (request.url.indexOf("themoviedb") > 0) {
+      return next.handle(request);
+    }
+
     if (token) {
       request = request.clone({
         setHeaders: {

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { movie } from "src/app/fake-db/movie";
 import { EmbedVideoService } from "ngx-embed-video";
+import { ActivatedRoute } from "@angular/router";
+import { MoviesService } from "src/app/core/services/movies.service";
 
 @Component({
   selector: "app-movie",
@@ -12,17 +13,48 @@ export class MovieComponent implements OnInit {
   public movie: any;
   public videoIframe: any;
   public imageBaseUrl = "http://image.tmdb.org/t/p/original/";
-  public rating = 0;
+  public loading = true;
 
-  constructor(private embedService: EmbedVideoService) {
-    this.movie = movie;
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private movieService: MoviesService,
+    private embedService: EmbedVideoService
+  ) {
   }
 
   ngOnInit() {
-    const videoUrl =
-      "https://www.youtube.com/watch?v=" + movie.videos.results[0].key;
+    this.activatedRoute.params.subscribe(({ movieId }) => {
+      this.movieService
+        .getMovieById(movieId)
+        .subscribe(
+          movie => this.loadMovie(movie),
+          error => this.handleError(error)
+        );
+    });
+  }
 
+  loadMovie(movie: any) {
+    this.movie = movie;
+    console.log(movie);
+
+    let ytVideo;
+    if (movie.videos && Array.isArray(movie.videos.results)) {
+      ytVideo = movie.videos.results.find(video => video.site === "YouTube");
+    }
+
+    if (ytVideo) {
+      this.loadTrailer(ytVideo);
+    }
+  }
+
+  loadTrailer(ytVideo) {
+    const videoUrl = "https://www.youtube.com/watch?v=" + ytVideo.key;
     this.videoIframe = this.embedService.embed(videoUrl);
-    console.log(this.videoIframe);
+  }
+
+  handleSuccess() {}
+
+  handleError(error) {
+    console.log(error);
   }
 }

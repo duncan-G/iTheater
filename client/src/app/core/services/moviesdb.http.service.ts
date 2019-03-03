@@ -21,7 +21,7 @@ export class MoviesDbService {
       this.movideDbKey
     }&query=${query}`;
 
-    return this.makeGetRequest(searchUrl);
+    return this.makeGetAllRequest(searchUrl);
   }
 
   getPopular(page: number) {
@@ -29,18 +29,26 @@ export class MoviesDbService {
       this.movideDbKey
     }&language=en-US&page=${page}`;
 
-    return this.makeGetRequest(popularUrl, true);
+    return this.makeGetAllRequest(popularUrl, true);
   }
 
-  getMovie(movieDbId: number) {
+  getSingleMovie(movieDbId: number) {
     const movieUrl = `${this.movieDbBaseUrl}movie/${movieDbId}?api_key=${
       this.movideDbKey
-    }&append_to_response=videos`;
+    }&language=en-US&append_to_response=videos`;
 
-    return this.makeGetRequest(movieUrl);
+    const headers = new HttpHeaders();
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+
+    const delayTime = this.calculateDelayTime();
+    return this.http.get<any>(movieUrl, { headers }).pipe(
+      delay(delayTime),
+      shareReplay()
+    );
   }
 
-  private makeGetRequest(url: string, isPopular = false) {
+  private makeGetAllRequest(url: string, isPopular = false) {
     const delayTime = this.calculateDelayTime();
     return this.http.get<any>(url, { observe: "response" }).pipe(
       delay(delayTime),

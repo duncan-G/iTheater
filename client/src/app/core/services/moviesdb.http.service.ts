@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import * as moment from "moment";
 import { environment } from "src/environments/environment";
 import { tap, map, delay, shareReplay } from "rxjs/operators";
-import { IMovie } from "../models/movie.interface";
+import { IMovie, IPopularMovie } from "../models/movie.interface";
+import { isComponentView } from "@angular/core/src/view/util";
 
 @Injectable()
 export class MoviesDbService {
@@ -28,23 +29,23 @@ export class MoviesDbService {
       this.movideDbKey
     }&language=en-US&page=${page}`;
 
-    return this.makeGetRequest(popularUrl);
+    return this.makeGetRequest(popularUrl, true);
   }
 
   getMovie(movieDbId: number) {
     const movieUrl = `${this.movieDbBaseUrl}movie/${movieDbId}?api_key=${
       this.movideDbKey
     }&append_to_response=videos`;
-    
+
     return this.makeGetRequest(movieUrl);
   }
 
-  private makeGetRequest(url: string) {
+  private makeGetRequest(url: string, isPopular = false) {
     const delayTime = this.calculateDelayTime();
     return this.http.get<any>(url, { observe: "response" }).pipe(
       delay(delayTime),
       tap(response => this.updateRateLimits(response.headers)),
-      map(response => this.mapResults(response.body.results)),
+      map(response => this.mapResults(response.body.results, isPopular)),
       shareReplay()
     );
   }
@@ -62,18 +63,40 @@ export class MoviesDbService {
     this.resetTime = +headers.get("X-RateLimit-Reset");
   }
 
-  private mapResults(results: any[]): IMovie[] {
-    const relevantKeys = ["id", "title", "poster_path", "release_date"];
-
+  private mapResults(results: any[], isPopular: boolean) {
     return results.map(movieResult => {
-      return relevantKeys.reduce(
-        (movie, key) => ({
-          ...movie,
-          [this.formatKey(key)]: movieResult[key]
-        }),
-        {}
-      ) as IMovie;
+      return isPopular
+        ? this.formatPopularMovie(movieResult)
+        : this.formatMovie(movieResult);
     });
+  }
+
+  private formatPopularMovie(movieResult) {
+    const relevantKeys = [
+      "backdrop_path",
+      "overview",
+      "vote_average",
+      "vote_count",
+      "title"
+    ];
+    return relevantKeys.reduce(
+      (movie, key) => ({
+        ...movie,
+        [this.formatKey(key)]: movieResult[key]
+      }),
+      {}
+    ) as IPopularMovie;
+  }
+
+  formatMovie(movieResult) {
+    const relevantKeys = ["id", "title", "poster_path", "release_date"];
+    return relevantKeys.reduce(
+      (movie, key) => ({
+        ...movie,
+        [this.formatKey(key)]: movieResult[key]
+      }),
+      {}
+    ) as IPopularMovie;
   }
 
   private formatKey(key: string) {
@@ -84,6 +107,12 @@ export class MoviesDbService {
         return "releaseDate";
       case "id":
         return "moviesDbId";
+      case "backdrop_path":
+        return "backdropPath";
+      case "vote_average":
+        return "voteAverage";
+      case "vote_count":
+        return "voteCount";
       default:
         return key;
     }

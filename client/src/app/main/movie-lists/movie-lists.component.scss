@@ -10,6 +10,27 @@ app-movie-lists {
     height: 100%;
     overflow: auto;
 
+    .btn-container {
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 500;
+
+      .add-btn {
+        background-color: #2196f3;
+        width: 75px;
+        height: 75px;
+        margin-bottom: 5px;
+
+        mat-icon {
+          color: #fff;
+        }
+      }
+    }
+
     #all-lists {
       display: flex;
       justify-content: center;

@@ -20,11 +20,13 @@
         *ngFor="let cardItem of cardItems"
         [cardItem]="cardItem"
         [imageUrl]="getImageUrl(cardItem)"
-        includeRating="cardIncludesRatings"
-        [handleRateChange]="handleRateChange"
-        hasDelete="cardHasDelete"
         [onClickPath]="getOnClickPath(cardItem)"
+        [hasRating]="cardHasRating"
+        [handleRateChange]="handleRateChange"
+        [hasDelete]="cardHasDelete"
         (onDelete)="handleDelete($event)"
+        [hasEdit]="cardHasEdit"
+        (onEdit)="handleEdit($event)"
       >
       </app-card-list-item>
     </ng-container>

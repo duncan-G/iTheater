@@ -12,6 +12,12 @@ const routes = [
 ];
 @NgModule({
   declarations: [LandingComponent],
-  imports: [RouterModule.forChild(routes), MatButtonModule, MatIconModule, SharedModule]
+  imports: [
+    RouterModule,
+    RouterModule.forChild(routes),
+    MatButtonModule,
+    MatIconModule,
+    SharedModule
+  ]
 })
 export class LandingModule {}

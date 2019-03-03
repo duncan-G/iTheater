@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 
-import { IMovie, ICreateMovie, IUpdateMovie } from "../models/movie.interface";
+import { IMovie, ICreateMovie, IUpdateMovie, IPopularMovie } from "../models/movie.interface";
 import { MovieListsService } from "./movie-lists.service";
 import { ItheaterHttpService } from "./itheater.http.service";
 import { MoviesDbService } from "./moviesdb.http.service";
@@ -9,15 +9,15 @@ import { tap, shareReplay } from "rxjs/operators";
 
 @Injectable()
 export class MoviesService {
-  private popularMoviesSubject: BehaviorSubject<IMovie[]>;
-  public popularMovies$: Observable<IMovie[]>;
+  private popularMoviesSubject: BehaviorSubject<IPopularMovie[]>;
+  public popularMovies$: Observable<IPopularMovie[]>;
 
   constructor(
     private iTheaterService: ItheaterHttpService,
     private moviesDbService: MoviesDbService,
     private movieListsService: MovieListsService
   ) {
-    this.popularMoviesSubject = new BehaviorSubject<IMovie[]>([]);
+    this.popularMoviesSubject = new BehaviorSubject<IPopularMovie[]>([]);
     this.popularMovies$ = this.popularMoviesSubject.asObservable();
   }
 

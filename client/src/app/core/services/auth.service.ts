@@ -11,12 +11,12 @@ import { environment } from "src/environments/environment";
 @Injectable()
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  public currentUser$: Observable<User>;
 
   constructor(private router: Router, private http: HttpClient) {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     this.currentUserSubject = new BehaviorSubject<User>(user);
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
   register(email: string, password) {

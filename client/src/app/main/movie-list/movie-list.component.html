@@ -2,14 +2,14 @@
   <app-card-list
     [list]="movieList"
     [cardItems]="movies"
-    addToolTipMsg="Add Movie"
-    deleteToolTipMsg="Delete Movie"
+    emptyListMsg="No movies here"
     addMsg="Add A Movie"
+    (onAdd)="openDialog()"
     [getImageUrl]="getImageUrl"
     [getOnClickPath]="getOnClickPath"
-    cardIncludesRatings="true"
+    [cardHasRating]="true"
     [handleRateChange]="updateMovieRating"
-    cardHasDelete="true"
+    [cardHasDelete]="true"
     [handleDelete]="deleteMovieFromList"
   ></app-card-list>
   <div class="btn-container">

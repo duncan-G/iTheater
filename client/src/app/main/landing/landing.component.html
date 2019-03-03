@@ -1,10 +1,42 @@
-<div id="landing" fxFlex fxLayout="column" flaxLayoutAlign="center center">
+<div id="landing" fxFlex fxLayout="column">
+  <div id="landing-message" *ngIf="!userLoggedIn">
+    <div
+      class="landing-message-backdrop"
+      [style.backgroundImage]="'url(/assets/movie-bg.jpg)'"
+    ></div>
+    <div
+      class="message-wrapper"
+      fxFlex
+      fxLayout="column"
+      fxLayoutAlign="center center"
+    >
+      <div class="message-title">
+        iTheater
+      </div>
+      <div class="message-content">
+        Create as many lists as you want for all your favorite movies,
+        or all the movies you want to watch.
+      </div>
+      <button (click)="handleSignUp()" color="primary" mat-raised-button>SIGN UP</button>
+
+      <div
+        class="explore"
+        fxFlex
+        fxLayout="column"
+        fxLayoutAlign="center center"
+      >
+        Explore Popular Movies
+        <mat-icon>arrow_downward</mat-icon>
+      </div>
+    </div>
+  </div>
+
   <ng-container *ngFor="let movie of popularMovies">
     <div class="popular-movie-container">
       <div
         class="backdrop"
         [style.backgroundImage]="
-          'url(' + imageBaseUrl + movie.backdrop_path + ')'
+          'url(' + imageBaseUrl + movie.backdropPath + ')'
         "
       ></div>
       <div
@@ -22,18 +54,16 @@
           </p>
           <div class="movie-ratings">
             <div class="rating">
-              <h2>{{ movie.vote_average }}</h2>
+              <h2>{{ movie.voteAverage }}</h2>
               <span class="rating-name">Average Rating</span>
             </div>
             <div class="rating">
-              <h2>{{ movie.vote_count }}</h2>
+              <h2>{{ movie.voteCount }}</h2>
               <span class="rating-name">Number Of Votes</span>
             </div>
             <div class="add-icon">
               <button mat-fab class="add-btn">
-                <mat-icon
-                  >add</mat-icon
-                >
+                <mat-icon>add</mat-icon>
               </button>
             </div>
           </div>

@@ -14,7 +14,7 @@ http://52.8.62.56/
 
 ##  Local Installation
 - Clone Repo
-- Setup environment variables in `./server/appsettings.json'
+- Setup environment variables in `./server/appsettings.json`
 - `cd ./server` then `donet watch run`
 - Setup environment variabls in `./client/src/environment`
 - `cd ./client`

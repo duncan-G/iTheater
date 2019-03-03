@@ -1,5 +1,6 @@
 <div id="movie-lists" fxFlex fxLayout="column">
   <app-card-list
+    [list]="listName"
     [cardItems]="movieLists"
     emptyListMsg="No movies lists here"
     addMsg="Add A Movie List"

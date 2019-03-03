@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   hmr: false,
   defaultPosterUrl: '/assets/movie-poster-default.png',
   posterBaseUrl: "http://image.tmdb.org/t/p/w300/",

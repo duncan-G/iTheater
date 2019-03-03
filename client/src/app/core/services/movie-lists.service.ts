@@ -90,15 +90,13 @@ export class MovieListsService {
   updateMovieList(movieListId: number, movieList: IUpdateMovieList) {
     return this.iTheaterService
       .updateMovieList(movieListId, movieList)
-      .subscribe(data => this.updateListInMovieLists(data));
+      .pipe(tap(data => this.updateListInMovieLists(data)));
   }
 
   deleteMovieList(movieListId: number) {
     return this.iTheaterService
       .deleteMovieList(movieListId)
-      .pipe(
-        tap(() => this.deleteListFromMovieLists(movieListId))
-      )
+      .pipe(tap(() => this.deleteListFromMovieLists(movieListId)));
   }
 
   private updateListInMovieLists(movieList: IMovieList) {

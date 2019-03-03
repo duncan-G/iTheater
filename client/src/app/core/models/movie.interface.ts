@@ -1,3 +1,11 @@
+export interface IPopularMovie {
+  backdropPath: string;
+  overview: string;
+  voteAverage: number;
+  voteCount: number;
+  title: string;
+
+}
 export interface IMovie {
   id: number;
   title: string;

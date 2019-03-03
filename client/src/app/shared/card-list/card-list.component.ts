@@ -16,26 +16,25 @@ import {
 export class CardListComponent implements OnInit {
   @Input() list: any;
   @Input() cardItems: any[];
-  @Input() addToolTipMsg: string;
-  @Input() deleteToolTipMsg: string;
   @Input() emptyListMsg: string;
   @Input() addMsg: string;
   @Output() onAdd = new EventEmitter();
 
   // cardItem arguments
   @Input() getImageUrl: any;
-  @Input() cardIncludesRatings: boolean;
-  @Input() handleRateChange: any;
-  @Input() cardHasDelete: boolean;
-  @Input() handleDelete: any;
   @Input() getOnClickPath: any;
+  @Input() cardHasRating: boolean;
+  @Input() cardHasEdit: boolean;
+  @Input() cardHasDelete: boolean;
+  @Input() handleRateChange: any;
+  @Input() handleEdit: any;
+  @Input() handleDelete: any;
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   handleAddToList() {
-    this.onAdd.emit("add");
+    this.onAdd.emit();
   }
 }

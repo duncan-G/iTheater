@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   public userLoggedIn: boolean;
 
   constructor(private _authService: AuthService) {
-    this._authService.currentUser.subscribe(user => {
+    this._authService.currentUser$.subscribe(user => {
       this.userLoggedIn = this._authService.isLoggedIn();
     });
   }

@@ -2,10 +2,13 @@
   <div class="image-container">
     <img [src]="imageUrl" />
   </div>
-  <div class="card-name">
-    <h3>{{ cardItem.title }}</h3>
+  <div *ngIf="cardItem && cardItem.name" class="card-name">
+    <h2 [matTooltip]="cardItem.name">{{ cardItem.name }}</h2>
   </div>
-  <div *ngIf="includeRating" class="card-rating">
+  <div *ngIf="cardItem && cardItem.title" class="card-name">
+    <h3 [matTooltip]="cardItem.title">{{ cardItem.title }}</h3>
+  </div>
+  <div *ngIf="hasRating === true" class="card-rating">
     <bar-rating
       (rateChange)="handleRateChange($event, cardItem)"
       theme="stars"
@@ -14,8 +17,15 @@
     ></bar-rating>
   </div>
 </div>
-<div *ngIf="hasDelete" class="card-delete">
-  <button mat-icon-button (click)="handleDelete()">
-    <mat-icon>delete_forever</mat-icon>
-  </button>
+<div class="card-actions">
+  <div *ngIf="hasDelete === true" class="card-action">
+    <button mat-icon-button (click)="handleDelete()">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="hasEdit === true" class="card-action">
+    <button mat-icon-button (click)="handleEdit()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
 </div>

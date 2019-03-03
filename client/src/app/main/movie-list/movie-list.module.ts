@@ -15,7 +15,7 @@ import {
 import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
 import { MovieSearchResultsComponent } from "./movie-search-results/movie-search-results.component";
 import { CardListModule } from "src/app/shared/card-list/card-list.module";
-import { DeleteListConfirmationComponent } from "./delete-list-confirmation/delete-list-confirmation.component";
+import { DeleteConfirmationDialogModule } from 'src/app/shared/delete-confirmation-dialog/delete-confirmation-dialog.module';
 
 const routes = [
   {
@@ -35,15 +35,15 @@ const routes = [
     MatDividerModule,
     BarRatingModule,
     CardListModule,
-    SharedModule
+    SharedModule,
+    DeleteConfirmationDialogModule
   ],
   declarations: [
     MovieListComponent,
     AddNewMovieComponent,
     MovieSearchResultsComponent,
-    DeleteListConfirmationComponent
   ],
 
-  entryComponents: [AddNewMovieComponent, DeleteListConfirmationComponent]
+  entryComponents: [AddNewMovieComponent]
 })
 export class MovieListModule {}

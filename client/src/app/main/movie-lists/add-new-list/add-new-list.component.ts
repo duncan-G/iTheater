@@ -34,7 +34,6 @@ export class AddNewListComponent implements OnInit {
   }
 
   handleSuccess(slug) {
-    console.log(slug);
     this.router.navigateByUrl("/my-theater/" + slug);
   }
 

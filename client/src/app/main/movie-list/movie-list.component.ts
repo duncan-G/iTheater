@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatDialogRef } from "@angular/material";
+import { Subscription } from "rxjs";
 
 import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
 import { IMovie } from "src/app/core/models/movie.interface";
 import { IMovieList } from "src/app/core/models/movie-list.interface";
 import { MovieListsService } from "src/app/core/services/movie-lists.service";
-import { Subscription } from "rxjs";
+import { environment } from "src/environments/environment";
+import { MoviesService } from "src/app/core/services/movies.service";
+import { movie } from "src/app/fake-db/movie";
+import { DeleteListConfirmationComponent } from "./delete-list-confirmation/delete-list-confirmation.component";
 
 @Component({
   selector: "app-movie-list",
@@ -23,10 +27,13 @@ export class MovieListComponent implements OnInit, OnDestroy {
   public movies: IMovie[] = [];
   public loadingList = true;
   public loadingMovies = true;
+  public testList = {};
 
   constructor(
-    private router: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    private movieService: MoviesService,
     private movieListService: MovieListsService
   ) {
     this.movieListSubscription = this.movieListService.moviesInCurrentList$.subscribe(
@@ -36,14 +43,18 @@ export class MovieListComponent implements OnInit, OnDestroy {
     );
     this.moviesSubscription = this.movieListService.currentMovieList$.subscribe(
       data => {
-        console.log('data', data);
         this.movieList = data;
       }
     );
+
+    // Ensure methods have the right this context when executed in child components
+    this.getOnClickPath = this.getOnClickPath.bind(this);
+    this.deleteMovieFromList = this.deleteMovieFromList.bind(this);
+    this.updateMovieRating = this.updateMovieRating.bind(this);
   }
 
   ngOnInit() {
-    this.router.params.subscribe(({ listSlug }) => {
+    this.activatedRoute.params.subscribe(({ listSlug }) => {
       this.getMovieList(listSlug);
       this.getMovies(listSlug);
     });
@@ -58,7 +69,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
     });
   }
 
-  getMovies(slug) {
+  getMovies(slug: string) {
     this.movieListService
       .getMoviesOnListBySlug(slug)
       .subscribe(
@@ -67,7 +78,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
       );
   }
 
-  getMovieList(slug) {
+  getMovieList(slug: string) {
     const movieList = this.movieListService.searchForMovieList(slug); // Do refetch data if it exists
     if (movieList) {
       this.movieListService.saveCurrentList(movieList);
@@ -79,6 +90,64 @@ export class MovieListComponent implements OnInit, OnDestroy {
           error => console.error(error)
         );
     }
+  }
+
+  handleDeleteMovieList() {
+    const deleteDialog = this.dialog.open(DeleteListConfirmationComponent, {
+      data: {
+        name: this.movieList.name
+      },
+      width: "50%",
+      maxWidth: "600px"
+    });
+
+    deleteDialog.afterClosed().subscribe(deleteList => {
+      if (deleteList) {
+        this.deleteMovieList();
+      }
+    });
+  }
+
+  deleteMovieList() {
+    this.movieListService
+      .deleteMovieList(this.movieList.id)
+      .subscribe(
+        () => this.router.navigateByUrl("/my-theater"),
+        error => console.error(error)
+      );
+  }
+
+  deleteMovieFromList(movieId: number) {
+    this.movieService
+      .deleteMovie(movieId)
+      .subscribe(() => this.handleSuccess(), error => this.handleError(error));
+  }
+
+  updateMovieRating(rating, movie: IMovie) {
+    console.log(rating, movie);
+    this.movieService
+      .updateMovie(movie.id, {
+        rating: rating
+      })
+      .subscribe(() => this.handleSuccess(), error => this.handleError(error));
+  }
+
+  getImageUrl(movie: IMovie) {
+    const posterPathBase = "http://image.tmdb.org/t/p/w300/";
+
+    return movie.posterPath
+      ? posterPathBase + movie.posterPath
+      : environment.defaultPosterUrl;
+  }
+
+  getOnClickPath(movie: IMovie) {
+    return `/my-theater/${this.movieList.slug}/${movie.moviesDbId}`;
+  }
+
+  private handleSuccess() {}
+
+  private handleError(error) {
+    console.error(error);
   }
 
   ngOnDestroy() {

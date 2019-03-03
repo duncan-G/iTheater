@@ -1,0 +1,21 @@
+<div [routerLink]="onClickPath">
+  <div class="image-container">
+    <img [src]="imageUrl" />
+  </div>
+  <div class="card-name">
+    <h3>{{ cardItem.title }}</h3>
+  </div>
+  <div *ngIf="includeRating" class="card-rating">
+    <bar-rating
+      (rateChange)="handleRateChange($event, cardItem)"
+      theme="stars"
+      [rate]="cardItem.rating"
+      [max]="5"
+    ></bar-rating>
+  </div>
+</div>
+<div *ngIf="hasDelete" class="card-delete">
+  <button mat-icon-button (click)="handleDelete()">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
+</div>

@@ -1,48 +1,34 @@
 <div id="movie-list" fxFlex fxLayout="column">
-  <div id="all-movies">
-    <div id="movie-name">
-      <h1 *ngIf="movieList">{{ movieList.name }}</h1>
-    </div>
-    <div class="movie-items-wrapper">
-      <div class="add-btn-container" *ngIf="movies.length > 0">
-        <button
-          (click)="openDialog()"
-          mat-fab
-          class="add-btn"
-          matTooltip="Add new list"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-
-      <div class="delete-btn-container">
-        <button
-          mat-fab
-          class="delete-btn"
-          matTooltip="Delete list"
-        >
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-      </div>
-
-      <div class="no-lists" *ngIf="movies.length === 0">
-        <h1 class="no-lists-title">No Movies Here</h1>
-        <button
-          (click)="openDialog()"
-          class="no-lists-button"
-          mat-raised-button
-          color="primary"
-        >
-          ADD A MOVIE
-        </button>
-      </div>
-
-      <app-movie-item
-        *ngFor="let movie of movies"
-        [movie]="movie"
-        [listName]="listName"
-      >
-      </app-movie-item>
-    </div>
+  <app-card-list
+    [list]="movieList"
+    [cardItems]="movies"
+    addToolTipMsg="Add Movie"
+    deleteToolTipMsg="Delete Movie"
+    addMsg="Add A Movie"
+    [getImageUrl]="getImageUrl"
+    [getOnClickPath]="getOnClickPath"
+    cardIncludesRatings="true"
+    [handleRateChange]="updateMovieRating"
+    cardHasDelete="true"
+    [handleDelete]="deleteMovieFromList"
+  ></app-card-list>
+  <div class="btn-container">
+    <button
+      *ngIf="movies && movies.length > 0"
+      (click)="openDialog()"
+      mat-fab
+      class="add-btn"
+      matTooltip="Add Movie"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <button
+      (click)="handleDeleteMovieList()"
+      mat-mini-fab
+      class="delete-btn"
+      matTooltip="Delete Movie"
+    >
+      <mat-icon>delete_forever</mat-icon>
+    </button>
   </div>
 </div>

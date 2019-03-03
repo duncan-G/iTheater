@@ -59,7 +59,7 @@ button {
 }
 
 .mat-form-field {
-
+    color: #ffffff !important;
     // Fix: "Table-cell and inline-table in mat-select"
     &.mat-form-field-type-mat-select {
 
@@ -84,6 +84,10 @@ button {
             }
         }
     }
+}
+
+.mat-form-field-outline, .mat-form-field-label {
+    color: #ffffff !important;
 }
 
 // Fix: Stepper icons are broken due to Fuse's icon helpers

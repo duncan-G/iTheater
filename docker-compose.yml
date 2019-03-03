@@ -17,7 +17,7 @@ services:
       context: ./Server
       dockerfile: ./Dockerfile
     environment:
-      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_URLS=${ASPNETCORE_URLS}
     ports:
       - 5000:5000
       - 5001:5001

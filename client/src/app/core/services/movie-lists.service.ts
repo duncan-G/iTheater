@@ -96,7 +96,9 @@ export class MovieListsService {
   deleteMovieList(movieListId: number) {
     return this.iTheaterService
       .deleteMovieList(movieListId)
-      .subscribe(() => this.deleteListFromMovieLists(movieListId));
+      .pipe(
+        tap(() => this.deleteListFromMovieLists(movieListId))
+      )
   }
 
   private updateListInMovieLists(movieList: IMovieList) {

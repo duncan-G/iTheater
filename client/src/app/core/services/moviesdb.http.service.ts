@@ -50,11 +50,12 @@ export class MoviesDbService {
   }
 
   private calculateDelayTime() {
-    if (!this.remaining) {
+    if (this.remaining === undefined || this.remaining > 0) {
       return 0;
     }
-    const resetTime = moment().add(this.resetTime, "second");
-    return moment().diff(resetTime);
+
+    const timeRemaining = this.resetTime - Math.floor(Date.now() / 1000);
+    return Math.max(0, timeRemaining);
   }
   private updateRateLimits(headers: HttpHeaders) {
     this.remaining = +headers.get("X-RateLimit-Remaining");

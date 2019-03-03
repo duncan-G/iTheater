@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { MovieListComponent } from "./movie-list.component";
 import { RouterModule } from "@angular/router";
 import { BarRatingModule } from "ngx-bar-rating";
-import { MovieItemComponent } from "./movie-item/movie-item.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import {
   MatTooltipModule,
@@ -14,7 +13,9 @@ import {
   MatInputModule
 } from "@angular/material";
 import { AddNewMovieComponent } from "./add-new-movie/add-new-movie.component";
-import { MovieSearchResultsComponent } from './movie-search-results/movie-search-results.component';
+import { MovieSearchResultsComponent } from "./movie-search-results/movie-search-results.component";
+import { CardListModule } from "src/app/shared/card-list/card-list.module";
+import { DeleteListConfirmationComponent } from "./delete-list-confirmation/delete-list-confirmation.component";
 
 const routes = [
   {
@@ -23,7 +24,6 @@ const routes = [
   }
 ];
 @NgModule({
-  declarations: [MovieListComponent, MovieItemComponent, AddNewMovieComponent, MovieSearchResultsComponent],
   imports: [
     RouterModule.forChild(routes),
     MatDialogModule,
@@ -34,8 +34,16 @@ const routes = [
     MatInputModule,
     MatDividerModule,
     BarRatingModule,
+    CardListModule,
     SharedModule
   ],
-  entryComponents: [AddNewMovieComponent]
+  declarations: [
+    MovieListComponent,
+    AddNewMovieComponent,
+    MovieSearchResultsComponent,
+    DeleteListConfirmationComponent
+  ],
+
+  entryComponents: [AddNewMovieComponent, DeleteListConfirmationComponent]
 })
 export class MovieListModule {}

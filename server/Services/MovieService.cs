@@ -83,7 +83,7 @@ namespace Server.Services {
                 throw new AppException ("Unauthorized");
 
             _context.Movies.Remove (movie);
-            _context.SaveChangesAsync ();
+            _context.SaveChanges ();
         }
     }
 }

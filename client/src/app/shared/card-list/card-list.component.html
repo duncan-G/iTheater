@@ -1,0 +1,32 @@
+<div class="card-list-items">
+  <div class="list-name">
+    <h1 *ngIf="list">{{ list.name }}</h1>
+  </div>
+  <div class="list-items-wrapper">
+    <div class="no-lists" *ngIf="!cardItems || cardItems.length === 0">
+      <h1 class="no-lists-title">{{ emptyListMsg }}</h1>
+      <button
+        (click)="handleAddToList()"
+        class="no-lists-button"
+        mat-raised-button
+        color="primary"
+      >
+        {{ addMsg }}
+      </button>
+    </div>
+
+    <ng-container *ngIf="cardItems && cardItems.length > 0">
+      <app-card-list-item
+        *ngFor="let cardItem of cardItems"
+        [cardItem]="cardItem"
+        [imageUrl]="getImageUrl(cardItem)"
+        includeRating="cardIncludesRatings"
+        [handleRateChange]="handleRateChange"
+        hasDelete="cardHasDelete"
+        [onClickPath]="getOnClickPath(cardItem)"
+        (onDelete)="handleDelete($event)"
+      >
+      </app-card-list-item>
+    </ng-container>
+  </div>
+</div>

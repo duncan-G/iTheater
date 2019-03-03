@@ -7,7 +7,7 @@ import { IMovie, IUpdateMovie, ICreateMovie } from "../models/movie.interface";
 @Injectable()
 export class ItheaterHttpService {
   private movieListUrl = environment.serverUrl + "api/movielists/";
-  private moviesUrl = environment.serverUrl + "api/movies";
+  private moviesUrl = environment.serverUrl + "api/movies/";
 
   constructor(private http: HttpClient) {}
 

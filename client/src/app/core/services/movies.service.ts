@@ -50,11 +50,9 @@ export class MoviesService {
   }
 
   deleteMovie(id: number) {
-    return this.iTheaterService
-      .deleteMovie(id)
-      .subscribe(
-        () => this.movieListsService.deleteMovieFromList(id),
-        shareReplay()
-      );
+    return this.iTheaterService.deleteMovie(id).pipe(
+      tap(() => this.movieListsService.deleteMovieFromList(id)),
+      shareReplay()
+    );
   }
 }

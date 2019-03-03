@@ -10,7 +10,7 @@ import { MovieListsService } from "src/app/core/services/movie-lists.service";
 import { environment } from "src/environments/environment";
 import { MoviesService } from "src/app/core/services/movies.service";
 import { movie } from "src/app/fake-db/movie";
-import { DeleteListConfirmationComponent } from "./delete-list-confirmation/delete-list-confirmation.component";
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: "app-movie-list",
@@ -93,7 +93,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
   }
 
   handleDeleteMovieList() {
-    const deleteDialog = this.dialog.open(DeleteListConfirmationComponent, {
+    const deleteDialog = this.dialog.open(DeleteConfirmationDialogComponent, {
       data: {
         name: this.movieList.name
       },

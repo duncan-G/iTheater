@@ -2,7 +2,7 @@
 
 Create movie lists and movies to those lists.
 
-http://52.8.62.56/
+http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
 
 ## Dependencies
 - .NET core

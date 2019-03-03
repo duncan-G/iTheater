@@ -1,90 +1,60 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { tap, map, shareReplay } from "rxjs/operators";
-import { MovieList } from "../models/movie-list.interface";
-import { Movie } from "../models/movie.interface";
+
+import { IMovie, ICreateMovie, IUpdateMovie } from "../models/movie.interface";
 import { MovieListsService } from "./movie-lists.service";
+import { ItheaterHttpService } from "./itheater.http.service";
+import { MoviesDbService } from "./moviesdb.http.service";
+import { tap, shareReplay } from "rxjs/operators";
 
 @Injectable()
 export class MoviesService {
-  private moviesSubject: BehaviorSubject<MovieList[]>;
-  private moviesUrl = environment.serverUrl + "api/movies";
-  private movieDbBaseUrl = environment.movieBaseUrl;
-  private movideDbKey = environment.moviePublicKey;
-
-  public movies: Observable<MovieList[]>;
+  private popularMoviesSubject: BehaviorSubject<IMovie[]>;
+  public popularMovies$: Observable<IMovie[]>;
 
   constructor(
-    private http: HttpClient,
+    private iTheaterService: ItheaterHttpService,
+    private moviesDbService: MoviesDbService,
     private movieListsService: MovieListsService
   ) {
-    this.moviesSubject = new BehaviorSubject<MovieList[]>([]);
-    this.movies = this.moviesSubject.asObservable();
+    this.popularMoviesSubject = new BehaviorSubject<IMovie[]>([]);
+    this.popularMovies$ = this.popularMoviesSubject.asObservable();
   }
 
-  search(query) {
-    const searchUrl = `${this.movieDbBaseUrl}search/movie?api_key=${
-      this.movideDbKey
-    }&query=${query}`;
+  search(query: string) {
+    return this.moviesDbService.search(query);
+  }
 
-    return this.http.get<any>(searchUrl, { observe: "response" }).pipe(
-      tap(response => this.updateRateLimits(response.headers)),
-      map(response => this.mapResults(response.body.results)),
+  getMovieById(movieDbId: number) {
+    return this.moviesDbService.getMovie(movieDbId);
+  }
+
+  getPopularMovies(page) {
+    return this.moviesDbService
+      .getPopular(page)
+      .subscribe(data => this.popularMoviesSubject.next(data));
+  }
+
+  addMovieToList(movie: ICreateMovie) {
+    return this.iTheaterService.addMovieToList(movie).pipe(
+      tap(data => this.movieListsService.addMovieToList(data)),
       shareReplay()
     );
   }
 
-  updateRateLimits(headers) {
-    const limit = headers.get("X-RateLimit-Limit");
-    const remaining = headers.get("X-RateLimit-Remaining");
-    const resetTime = headers.get("X-RateLimit-Reset");
-    console.log(limit, remaining, resetTime);
+  updateMovie(id: number, movie: IUpdateMovie) {
+    return this.iTheaterService.updateMovie(id, movie).pipe(
+      tap(data => this.movieListsService.updateMovieOnList(data)),
+      shareReplay()
+    );
   }
 
-  mapResults(results): Movie[] {
-    const relevantKeys = ["id", "title", "poster_path", "release_date"];
-
-    return results.map(movieResult => {
-      return relevantKeys.reduce(
-        (movie, key) => ({
-          ...movie,
-          [this.correctKey(key)]: movieResult[key]
-        }),
-        {}
-      ) as Movie;
-    });
+  deleteMovie(id: number) {
+    return this.iTheaterService
+      .deleteMovie(id)
+      .subscribe(
+        () => this.movieListsService.deleteMovieFromList(id),
+        shareReplay()
+      );
   }
-
-  private correctKey(key) {
-    switch (key) {
-      case "poster_path":
-        return "posterPath";
-      case "release_data":
-        return "releaseDate";
-      case "id":
-        return "moviesDbId"
-      default:
-        return key;
-    }
-  }
-
-  getMovieById() {}
-
-  getMovies() {}
-
-  addMovieToList(movie: Movie) {
-    return this.http
-      .post<Movie>(this.moviesUrl, movie)
-      .pipe(tap(data => this.updateMovieList(data)));
-  }
-
-  updateMovieList(data) {
-    this.movieListsService.addMovieToList(data);
-  }
-
-  updateMovie(id: number, rating: number) {}
-
-  deleteMovie(id: number) {}
 }

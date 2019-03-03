@@ -26,7 +26,7 @@ export class AddNewListComponent implements OnInit {
 
   handleSubmit() {
     this.movieListService
-      .addMovieList(this.addNewListForm.value)
+      .createMovieList(this.addNewListForm.value)
       .subscribe(
         slug => this.handleSuccess(slug),
         error => this.handleError(error)

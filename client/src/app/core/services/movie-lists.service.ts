@@ -1,65 +1,62 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { tap, map, shareReplay } from "rxjs/operators";
-import { MovieList } from "../models/movie-list.interface";
-import { Movie } from "../models/movie.interface";
+import {
+  IMovieList,
+  ICreateMovieList,
+  IUpdateMovieList
+} from "../models/movie-list.interface";
+import { IMovie } from "../models/movie.interface";
+import { ItheaterHttpService } from "./itheater.http.service";
 
 @Injectable()
 export class MovieListsService {
   // List of movies
-  private movieListsSubject: BehaviorSubject<MovieList[]>;
-  public movieLists: Observable<MovieList[]>;
+  private movieListsSubject: BehaviorSubject<IMovieList[]>;
+  public movieLists$: Observable<IMovieList[]>;
 
   // Current selected movie list
-  private currentMovieListSubject: BehaviorSubject<MovieList>;
-  public currentMovieList$: Observable<MovieList>;
+  private currentMovieListSubject: BehaviorSubject<IMovieList>;
+  public currentMovieList$: Observable<IMovieList>;
 
   // Movies in current selected movie list
-  private moviesInCurrentListSubject: BehaviorSubject<Movie[]>;
-  public moviesInCurrentList$: Observable<Movie[]>;
+  private moviesInCurrentListSubject: BehaviorSubject<IMovie[]>;
+  public moviesInCurrentList$: Observable<IMovie[]>;
 
   private movieListUrl = environment.serverUrl + "api/movielists/";
 
-  constructor(private http: HttpClient) {
+  constructor(private iTheaterService: ItheaterHttpService) {
     // Instantiate observables
-    this.movieListsSubject = new BehaviorSubject<MovieList[]>(null);
-    this.movieLists = this.movieListsSubject.asObservable();
+    this.movieListsSubject = new BehaviorSubject<IMovieList[]>(null);
+    this.movieLists$ = this.movieListsSubject.asObservable();
 
-    this.currentMovieListSubject = new BehaviorSubject<MovieList>(null);
+    this.currentMovieListSubject = new BehaviorSubject<IMovieList>(null);
     this.currentMovieList$ = this.currentMovieListSubject.asObservable();
 
-    this.moviesInCurrentListSubject = new BehaviorSubject<Movie[]>([]);
+    this.moviesInCurrentListSubject = new BehaviorSubject<IMovie[]>([]);
     this.moviesInCurrentList$ = this.moviesInCurrentListSubject.asObservable();
   }
 
-  // Get all movie lists
   getMovieLists() {
-    return this.http.get<MovieList[]>(this.movieListUrl).pipe(
-      tap(data => this.saveLists(data)),
+    return this.iTheaterService.getMovieLists().pipe(
+      tap(data => {
+        data.reverse(); // Place recently added first
+        this.movieListsSubject.next(data);
+      })
+    );
+  }
+
+  getMoviesOnListBySlug(slug: string) {
+    return this.iTheaterService.getMoviesOnListBySlug(slug).pipe(
+      tap(data => this.moviesInCurrentListSubject.next(data)),
       shareReplay()
     );
   }
 
-  saveLists(data) {
-    data.reverse(); // Place recently added first
-    this.movieListsSubject.next(data);
-  }
-
-  getMoviesOnListBySlug(slug) {
-    const url = this.movieListUrl + slug + "/movies";
-    return this.http.get<Movie[]>(url).pipe(
-      tap(data => this.saveMoviesInCurrentList(data)),
-      shareReplay()
-    );
-  }
-
-  saveMoviesInCurrentList(data) {
-    this.moviesInCurrentListSubject.next(data);
-  }
-
-  searchForMovieList(slug) {
+  // Search for movie list in MovieListsSubject
+  // Call this first before calling getMovieList
+  searchForMovieList(slug: string) {
     if (this.movieListsSubject.value) {
       return this.movieListsSubject.value.find(
         _movieList => _movieList.slug === slug
@@ -68,50 +65,41 @@ export class MovieListsService {
     return null;
   }
 
-  getMovieList(slug) {
-    return this.http.get<MovieList>(this.movieListUrl + slug).pipe(
-      tap(data => this.saveCurrentList(data)),
+  // Optionally use this method after calling searchForMovieList
+  saveCurrentList(movieList: IMovieList) {
+    this.currentMovieListSubject.next(movieList);
+  }
+
+  getMovieList(slug: string) {
+    return this.iTheaterService.getMovieListBySLug(slug).pipe(
+      tap(data => this.currentMovieListSubject.next(data)),
       shareReplay()
     );
   }
 
-  saveCurrentList(data) {
-    this.currentMovieListSubject.next(data);
-  }
-
-  addMovieList(data) {
-    return this.http.post<MovieList>(this.movieListUrl, data).pipe(
-      tap(data => this.updateMovieList(data)),
-      map((data: MovieList) => data.slug),
-
+  createMovieList(movieList: ICreateMovieList) {
+    return this.iTheaterService.createMovieList(movieList).pipe(
+      tap(data =>
+        this.movieListsSubject.next([data, ...this.movieListsSubject.value])
+      ),
+      map((data: IMovieList) => data.slug),
       shareReplay()
     );
   }
 
-  updateMovieList(data) {
-    this.movieListsSubject.next([data, ...this.movieListsSubject.value]);
+  updateMovieList(movieListId: number, movieList: IUpdateMovieList) {
+    return this.iTheaterService
+      .updateMovieList(movieListId, movieList)
+      .subscribe(data => this.updateListInMovieLists(data));
   }
 
-  addMovieToList(movie: Movie) {
-    const currentMovies = this.moviesInCurrentListSubject.value;
-
-    if (currentMovies === null) {
-      // This case, in general. Should not happen.
-      this.moviesInCurrentListSubject.next([movie]);
-    } else {
-      this.moviesInCurrentListSubject.next([movie, ...currentMovies]);
-    }
+  deleteMovieList(movieListId: number) {
+    return this.iTheaterService
+      .deleteMovieList(movieListId)
+      .subscribe(() => this.deleteListFromMovieLists(movieListId));
   }
 
-  addDefaultImage(movieListId: number, defaultImageUrl: string) {
-    this.http
-      .put<MovieList>(this.movieListUrl + movieListId, {
-        defaultImageUrl
-      })
-      .subscribe(data => this.updateMovieInList(data));
-  }
-
-  updateMovieInList(movieList: MovieList) {
+  private updateListInMovieLists(movieList: IMovieList) {
     if (
       this.currentMovieListSubject.value &&
       this.currentMovieListSubject.value.id === movieList.id
@@ -130,5 +118,53 @@ export class MovieListsService {
     }
   }
 
-  deleteMovieList() {}
+  private deleteListFromMovieLists(movieListId: number) {
+    if (
+      this.currentMovieListSubject.value &&
+      this.currentMovieListSubject.value.id === movieListId
+    ) {
+      this.currentMovieListSubject.next(null);
+    }
+
+    if (this.movieListsSubject.value) {
+      const updatedList = this.movieListsSubject.value.filter(
+        _movieList => _movieList.id !== movieListId
+      );
+      this.movieListsSubject.next(updatedList);
+    }
+  }
+
+  public addMovieToList(movie: IMovie) {
+    const currentMovies = this.moviesInCurrentListSubject.value;
+
+    if (currentMovies === null) {
+      // This case, in general. Should not happen.
+      this.moviesInCurrentListSubject.next([movie]);
+    } else {
+      this.moviesInCurrentListSubject.next([movie, ...currentMovies]);
+    }
+  }
+
+  public updateMovieOnList(movie: IMovie) {
+    const currentMovies = this.moviesInCurrentListSubject.value;
+    if (currentMovies === null) {
+      // This case, in general. Should not happen.
+      this.moviesInCurrentListSubject.next([movie]);
+    } else {
+      this.moviesInCurrentListSubject.next(
+        currentMovies.map(_movie => {
+          return _movie.id === movie.id ? movie : _movie;
+        })
+      );
+    }
+  }
+
+  public deleteMovieFromList(movieId: number) {
+    const currentMovies = this.moviesInCurrentListSubject.value;
+    if (currentMovies) {
+      this.moviesInCurrentListSubject.next(
+        currentMovies.filter(_movie => _movie.id != movieId)
+      );
+    }
+  }
 }

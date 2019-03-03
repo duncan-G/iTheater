@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { movieListWithImage } from "../../fake-db/movie-lists";
 import { MovieListsService } from "src/app/core/services/movie-lists.service";
-import { MovieList } from "src/app/core/models/movie-list.interface";
+import { IMovieList } from "src/app/core/models/movie-list.interface";
 import { MatDialog, MatDialogRef } from "@angular/material";
 
 import { AddNewListComponent } from "./add-new-list/add-new-list.component";
@@ -13,7 +12,7 @@ import { AddNewListComponent } from "./add-new-list/add-new-list.component";
   encapsulation: ViewEncapsulation.None
 })
 export class MovieListsComponent implements OnInit {
-  public movieLists: MovieList[];
+  public movieLists: IMovieList[];
   private dialogRef : MatDialogRef<AddNewListComponent>;
 
   constructor(
@@ -23,7 +22,7 @@ export class MovieListsComponent implements OnInit {
 
   ngOnInit() {
     this.movieListService.getMovieLists().subscribe(() => {
-      this.movieListService.movieLists.subscribe(
+      this.movieListService.movieLists$.subscribe(
         data => (this.movieLists = data)
       );
     });

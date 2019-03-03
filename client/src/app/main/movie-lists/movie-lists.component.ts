@@ -3,7 +3,10 @@ import { MovieListsService } from "src/app/core/services/movie-lists.service";
 import { IMovieList } from "src/app/core/models/movie-list.interface";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { environment } from "src/environments/environment";
-import { MovieListFormComponent, IMovieListFormDialogData } from "./movie-list-form/movie-list-form.component";
+import {
+  MovieListFormComponent,
+  IMovieListFormDialogData
+} from "./movie-list-form/movie-list-form.component";
 
 @Component({
   selector: "app-movie-lists",
@@ -13,7 +16,8 @@ import { MovieListFormComponent, IMovieListFormDialogData } from "./movie-list-f
 })
 export class MovieListsComponent implements OnInit {
   public movieLists: IMovieList[];
-
+  public listName = { name: "Movie Lists" };
+  
   constructor(
     private movieListService: MovieListsService,
     private dialog: MatDialog
@@ -38,7 +42,7 @@ export class MovieListsComponent implements OnInit {
         formType: "add"
       } as IMovieListFormDialogData,
       width: "50%",
-      maxWidth: "600px",
+      maxWidth: "600px"
     });
   }
 
@@ -51,7 +55,6 @@ export class MovieListsComponent implements OnInit {
         name: movieList.name,
         privacy: movieList.privacy,
         movieListId: movieList.id
-
       },
       width: "50%",
       maxWidth: "600px"

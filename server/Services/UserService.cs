@@ -25,6 +25,10 @@ namespace Server.Services {
 
             var user = await _context.Users.SingleOrDefaultAsync (_user => _user.Email == email);
 
+            if (user == null) {
+                return null;
+            }
+            
             if (!GeneralHelpers.VerifyPasswordHash (password, user.PasswordHash, user.Salt)) {
                 return null;
             }

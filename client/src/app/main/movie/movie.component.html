@@ -1,20 +1,17 @@
 <div id="movie-container" fxFlex fxLayout="column">
-  <div id="movie-wrapper">
+  <div id="movie-wrapper" *ngIf="movie">
     <div id="background-image">
       <img [src]="imageBaseUrl + movie.backdrop_path" />
     </div>
     <h1 id="movie-title">
       {{ movie.title }}
-      <span
-        ><bar-rating
-          [(rate)]="rating"
-          [max]="5"
-          [theme]="'stars'"
-        ></bar-rating
-      ></span>
     </h1>
     <div id="movie">
       <div id="iframe-wrapper" [innerHtml]="videoIframe"></div>
+      <div id="overview">{{ movie.overview }}</div>
     </div>
+  </div>
+  <div *ngIf="!movie">
+    <h1>No movie found</h1>
   </div>
 </div>

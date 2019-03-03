@@ -124,7 +124,6 @@ export class MovieListComponent implements OnInit, OnDestroy {
   }
 
   updateMovieRating(rating, movie: IMovie) {
-    console.log(rating, movie);
     this.movieService
       .updateMovie(movie.id, {
         rating: rating

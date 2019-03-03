@@ -1,6 +1,8 @@
-.mat-dialog-content {
-  overflow: hidden;
-  mat-form-field {
-    width: 100%;
+app-movie-list-form {
+  .mat-dialog-content {
+    overflow: hidden;
+    mat-form-field {
+      width: 100%;
+    }
   }
 }

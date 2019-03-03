@@ -86,10 +86,6 @@ button {
     }
 }
 
-.mat-form-field-outline, .mat-form-field-label {
-    color: #ffffff !important;
-}
-
 // Fix: Stepper icons are broken due to Fuse's icon helpers
 mat-horizontal-stepper,
 mat-vertical-stepper {

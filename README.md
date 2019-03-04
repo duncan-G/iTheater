@@ -26,4 +26,4 @@ http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
  ## Deployment
  - Create`.env` file in root directory. Similar to `.env.deploy`.
  - build image `/bin/bash deploy.sh` (may have bugs)
- - `cat docker-compose.yml | envsubst | docker-compose -f - build` to run
+ - `cat docker-compose.yml | envsubst | docker-compose -f - build` to up

@@ -20,6 +20,7 @@ http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
 - `cd ./server` then `dotnet restore`, `dotnet watch run`
 - Setup environment variabls in `./client/src/environment`
 - `cd ./client`
+  - `npm install`
   - `npm run start-hmr` to use hot module reloading (or)
   - `ng start` 
   

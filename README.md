@@ -25,7 +25,7 @@ http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
   - `npm run start-hmr` to use hot module reloading (or)
   - `ng start` 
   
- ## Deployment
+ ## Deployment (Linux)
  - Build client `npm run build-prod`
  - Create`.env` file in root directory. Similar to `.env.deploy`.
  - Build docker image `/bin/bash deploy.sh` (may have bugs)

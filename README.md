@@ -26,5 +26,21 @@ http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
  ## Deployment
  - Build client `npm run build-prod`
  - Create`.env` file in root directory. Similar to `.env.deploy`.
- - build image `/bin/bash deploy.sh` (may have bugs)
- - `cat docker-compose.yml | envsubst | docker-compose -f - build` to up
+ - Build docker image `/bin/bash deploy.sh` (may have bugs)
+ - `cat docker-compose.yml | envsubst | docker-compose -f - up` to run
+
+## Application views
+**Login**
+![alt text](https://raw.githubusercontent.com/duncan-G/iTheater/master/docs/images/login.PNG)
+
+**Movie Lists**
+![alt text](https://raw.githubusercontent.com/duncan-G/iTheater/master/docs/images/movielists.PNG)
+
+**Movie List**
+![alt text](https://raw.githubusercontent.com/duncan-G/iTheater/master/docs/images/movies.PNG)
+
+**Add Movie**
+![alt text](https://raw.githubusercontent.com/duncan-G/iTheater/master/docs/images/add_movie.PNG)
+
+**Movie**
+![alt text](https://raw.githubusercontent.com/duncan-G/iTheater/master/docs/images/watch_trailer.PNG)

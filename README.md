@@ -1,6 +1,6 @@
 # iTheater
 
-Create movie lists and movies to those lists.
+Create movie lists and add movies to those lists.
 
 http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
 
@@ -15,12 +15,13 @@ http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
 ##  Local Installation
 - Clone Repo
 - Setup environment variables in `./server/appsettings.json`
-- `cd ./server` then `donet watch run`
+- `cd ./server` then `dotnet restore`, `dotnet watch run`
 - Setup environment variabls in `./client/src/environment`
 - `cd ./client`
   - `npm run start-hmr` to use hot module reloading (or)
   - `ng start` 
   
  ## Deployment
+ - Create`.env` file in root directory. Similar to `.env.deploy`.
  - build image `/bin/bash deploy.sh` (may have bugs)
  - `cat docker-compose.yml | envsubst | docker-compose -f - build` to run

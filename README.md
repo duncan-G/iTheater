@@ -4,8 +4,6 @@ Create movie lists and add movies to those lists.
 
 ![alt text](https://raw.githubusercontent.com/duncan-G/iTheater/master/docs/images/landing.PNG)
 
-http://ec2-52-8-62-56.us-west-1.compute.amazonaws.com/
-
 ## Dependencies
 - .NET core 2.2
 - Angular 7
